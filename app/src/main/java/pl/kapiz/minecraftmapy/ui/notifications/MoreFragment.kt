@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import pl.kapiz.minecraftmapy.R
 
-class NotificationsFragment : Fragment() {
+class MoreFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var moreViewModel: MoreViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
+        moreViewModel =
+            ViewModelProvider(this).get(MoreViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_more, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        moreViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
