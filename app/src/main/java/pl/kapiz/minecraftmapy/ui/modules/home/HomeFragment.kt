@@ -1,20 +1,25 @@
-package pl.kapiz.minecraftmapy.ui.home
+package pl.kapiz.minecraftmapy.ui.modules.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import pl.kapiz.minecraftmapy.R
+import dagger.android.support.DaggerFragment
+import pl.kapiz.minecraftmapy.databinding.FragmentHomeBinding
+import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : DaggerFragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val homeViewModel: HomeViewModel by viewModels { viewModelFactory }
+
+    private lateinit var b: FragmentHomeBinding
 
     private val mapsAdapter = MapsAdapter(listOf())
 
@@ -23,21 +28,22 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        initView(root)
-        return root
+        b = FragmentHomeBinding.inflate(inflater, container, false)
+        return b.root
     }
 
-    private fun initView(root: View) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
         homeViewModel.init()
         homeViewModel.maps.observe(viewLifecycleOwner, Observer { maps ->
             mapsAdapter.setList(maps)
         })
 
-        val recyclerView = root.findViewById<RecyclerView>(R.id.map_list)
-
-        recyclerView.apply {
+        b.mapList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mapsAdapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

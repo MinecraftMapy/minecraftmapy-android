@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="pl.kapiz.minecraftmapy.ui.home.HomeFragment"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="pl.kapiz.minecraftmapy.ui.dashboard.SearchFragment"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_more"
-        android:name="pl.kapiz.minecraftmapy.ui.notifications.MoreFragment"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment"
         android:label="@string/title_more"
         tools:layout="@layout/fragment_more" />
 </navigation>

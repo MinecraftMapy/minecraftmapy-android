@@ -1,12 +1,13 @@
-package pl.kapiz.minecraftmapy.ui.home
+package pl.kapiz.minecraftmapy.ui.modules.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class HomeViewModel : ViewModel(), CoroutineScope {
+class HomeViewModel @Inject constructor() : ViewModel(), CoroutineScope {
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -14,8 +15,7 @@ class HomeViewModel : ViewModel(), CoroutineScope {
 
     private val mapList = mutableListOf("Jedna mapka", "i kolejna")
     private val _maps = MutableLiveData<List<String>>()
-    val maps: LiveData<List<String>>
-        get() = _maps
+    val maps: LiveData<List<String>> = _maps
 
     fun init() {
         _maps.value = mapList

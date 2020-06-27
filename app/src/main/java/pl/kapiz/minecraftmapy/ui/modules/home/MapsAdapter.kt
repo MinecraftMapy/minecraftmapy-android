@@ -1,4 +1,4 @@
-package pl.kapiz.minecraftmapy.ui.home
+package pl.kapiz.minecraftmapy.ui.modules.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
