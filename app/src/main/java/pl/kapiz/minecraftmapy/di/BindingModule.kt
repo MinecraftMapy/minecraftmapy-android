@@ -6,7 +6,7 @@ import pl.kapiz.minecraftmapy.ui.modules.main.MainActivity
 import pl.kapiz.minecraftmapy.ui.modules.main.MainModule
 
 @Module
-abstract class BindingModule {
+internal abstract class BindingModule {
 
     @ContributesAndroidInjector(modules = [MainModule::class])
     abstract fun contributeMainActivity(): MainActivity

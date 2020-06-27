@@ -13,8 +13,9 @@ import pl.kapiz.minecraftmapy.ui.modules.more.MoreViewModel
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchViewModel
 
+@Suppress("unused")
 @Module
-abstract class MainModule {
+internal abstract class MainModule {
 
     @ContributesAndroidInjector
     abstract fun contributeHomeFragment(): HomeFragment

@@ -11,6 +11,5 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     val text: LiveData<String> = _text
 
     fun init() {
-        _text.value = "This is search Fragment"
     }
 }

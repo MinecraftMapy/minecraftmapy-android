@@ -1,29 +1,37 @@
 package pl.kapiz.minecraftmapy.ui.modules.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import pl.kapiz.minecraftmapy.data.api.Api
+import pl.kapiz.minecraftmapy.data.api.ApiResponse
+import pl.kapiz.minecraftmapy.data.pojo.Map
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class HomeViewModel @Inject constructor() : ViewModel(), CoroutineScope {
+class HomeViewModel @Inject constructor(
+    private val api: Api
+) : ViewModel(), CoroutineScope {
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    private val mapList = mutableListOf("Jedna mapka", "i kolejna")
-    private val _maps = MutableLiveData<List<String>>()
-    val maps: LiveData<List<String>> = _maps
+    private val mapList = mutableListOf<Map>()
+    private val _maps = MediatorLiveData<List<Map>>()
+    val maps: LiveData<List<Map>> = _maps
 
     fun init() {
-        _maps.value = mapList
-
-        launch {
-            delay(2000)
-            mapList.add("jeszcze jedna")
-            _maps.value = mapList
+        val page = api.getMaps()
+        _maps.addSource(page) {
+            if (it is ApiResponse.ApiSuccessResponse) {
+                mapList.addAll(it.body.data)
+                _maps.value = mapList
+            }
         }
+        page.refresh()
     }
 }

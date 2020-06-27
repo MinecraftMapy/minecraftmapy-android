@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import pl.kapiz.minecraftmapy.R
+import pl.kapiz.minecraftmapy.data.pojo.Map
 
-class MapsAdapter(private var maps: List<String>) : RecyclerView.Adapter<MapsAdapter.ViewHolder>() {
+class MapsAdapter(private var maps: List<Map>) : RecyclerView.Adapter<MapsAdapter.ViewHolder>() {
 
-    fun setList(maps: List<String>) {
+    fun setList(maps: List<Map>) {
         this.maps = maps
         notifyDataSetChanged()
     }
@@ -24,7 +25,7 @@ class MapsAdapter(private var maps: List<String>) : RecyclerView.Adapter<MapsAda
         val map = maps[position]
 
         holder.apply {
-            mapTitleView.text = map
+            mapTitleView.text = map.info.title
         }
     }
 

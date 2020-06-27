@@ -6,7 +6,7 @@ import dagger.Module
 import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
 
 @Module
-abstract class ViewModelFactoryModule {
+internal abstract class ViewModelFactoryModule {
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
