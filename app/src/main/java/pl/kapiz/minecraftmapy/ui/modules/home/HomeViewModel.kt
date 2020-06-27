@@ -24,8 +24,14 @@ class HomeViewModel @Inject constructor(
     private val _maps = MediatorLiveData<List<Map>>()
     val maps: LiveData<List<Map>> = _maps
 
+    private var currentPage = 0
+
     fun init() {
-        val page = api.getMaps()
+        if (currentPage == 0) downloadNextPage()
+    }
+
+    fun downloadNextPage() {
+        val page = api.getMaps(++currentPage)
         _maps.addSource(page) {
             if (it is ApiResponse.ApiSuccessResponse) {
                 mapList.addAll(it.body.data)
