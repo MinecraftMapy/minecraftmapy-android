@@ -47,6 +47,8 @@ class HomeFragment : DaggerFragment() {
 
         homeViewModel.init()
         homeViewModel.maps.observe(viewLifecycleOwner, Observer { maps ->
+            b.mapProgress.visibility = View.GONE
+            b.mapList.visibility = View.VISIBLE
             mapsAdapter.setNewList(maps)
         })
 

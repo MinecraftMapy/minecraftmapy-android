@@ -5,13 +5,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         tools:context=".ui.modules.home.HomeFragment">
+
+        <FrameLayout
+            android:id="@+id/map_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/map_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_map" />
+            android:visibility="gone"
+            tools:listitem="@layout/item_map"
+            tools:visibility="visible" />
     </LinearLayout>
 </layout>
 
