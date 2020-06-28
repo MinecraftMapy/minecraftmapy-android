@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
-import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
 import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentHomeBinding
 import pl.kapiz.minecraftmapy.ui.modules.map.MapActivity
+import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
 
 class HomeFragment : DaggerFragment() {
@@ -61,12 +61,9 @@ class HomeFragment : DaggerFragment() {
         }
 
         b.mapList.apply {
-            layoutManager = LinearLayoutManager(context).apply {
-                addOnScrollListener(object : EndlessRecyclerOnScrollListener(this, 20) {
-                    override fun onLoadMore(currentPage: Int) {
-                        homeViewModel.downloadNextPage()
-                    }
-                })
+            layoutManager = LinearLayoutManager(context)
+            setEndlessScrollListener(20) {
+                homeViewModel.downloadNextPage()
             }
             adapter = this@HomeFragment.adapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
