@@ -2,8 +2,7 @@ package pl.kapiz.minecraftmapy.ui.modules.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.DrawableImageViewTarget
+import coil.api.load
 import com.mikepenz.fastadapter.binding.ModelAbstractBindingItem
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
@@ -24,9 +23,9 @@ class MapItem(map: Map) : ModelAbstractBindingItem<Map, ItemMapBinding>(map) {
             mapDescription.text = model.info.description.replace("\n", " ")
                 .trimEnd(150)
 
-            Glide.with(root)
-                .load(model.images[0])
-                .into(DrawableImageViewTarget(mapImage).waitForLayout())
+            mapImage.load(model.images[0]) {
+                crossfade(true)
+            }
         }
     }
 }
