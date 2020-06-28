@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import coil.api.load
 import dagger.android.support.DaggerAppCompatActivity
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.ActivityMapBinding
@@ -36,10 +38,22 @@ class MapActivity : DaggerAppCompatActivity() {
     }
 
     private fun initView() {
-        supportActionBar?.title = map?.info?.title
+        map?.also { map ->
+            supportActionBar?.title = map.info.title
 
-        b.mapTitle.text = map?.info?.title
-        b.mapDescription.text = map?.info?.description
+            b.apply {
+                mapTitle.text = map.info.title
+                mapDescription.text = map.info.description
+
+                mapCarousel.pageCount = map.images.size
+                mapCarousel.setImageListener { position, imageView ->
+                    imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+                    imageView.load(map.images[position]) {
+                        crossfade(true)
+                    }
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
