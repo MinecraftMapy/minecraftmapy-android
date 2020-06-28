@@ -15,6 +15,7 @@ import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
 import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentHomeBinding
+import pl.kapiz.minecraftmapy.ui.modules.map.MapActivity
 import javax.inject.Inject
 
 class HomeFragment : DaggerFragment() {
@@ -52,7 +53,12 @@ class HomeFragment : DaggerFragment() {
             mapsAdapter.setNewList(maps)
         })
 
-        adapter = FastAdapter.with(mapsAdapter)
+        adapter = FastAdapter.with(mapsAdapter).apply {
+            onClickListener = { _, _, item, _ ->
+                startActivity(MapActivity.getStartIntent(requireContext(), item.model))
+                true
+            }
+        }
 
         b.mapList.apply {
             layoutManager = LinearLayoutManager(context).apply {

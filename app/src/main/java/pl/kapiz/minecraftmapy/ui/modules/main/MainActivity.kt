@@ -5,16 +5,21 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 import pl.kapiz.minecraftmapy.R
+import pl.kapiz.minecraftmapy.databinding.ActivityMainBinding
 
 class MainActivity : DaggerAppCompatActivity() {
 
+    private lateinit var b: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        b = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(b.root)
+
+        setSupportActionBar(b.navActionBar)
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -27,6 +32,6 @@ class MainActivity : DaggerAppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        b.navView.setupWithNavController(navController)
     }
 }
