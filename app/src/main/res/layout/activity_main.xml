@@ -10,7 +10,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/nav_action_bar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="4dp"

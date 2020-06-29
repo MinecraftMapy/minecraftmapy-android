@@ -5,13 +5,14 @@
         <item name="colorPrimary">@color/amber_400</item>
         <item name="colorPrimaryDark">@color/amber_700</item>
         <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_grey_400</item>
         <item name="colorSecondaryVariant">@color/blue_grey_400</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/amber_400_dark</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
     </style>
 
 </resources>
