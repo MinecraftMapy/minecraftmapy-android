@@ -10,6 +10,8 @@ import dagger.android.support.DaggerAppCompatActivity
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.ActivityMapBinding
+import pl.kapiz.minecraftmapy.utils.BackStackHelper
+import javax.inject.Inject
 
 class MapActivity : DaggerAppCompatActivity() {
 
@@ -20,6 +22,9 @@ class MapActivity : DaggerAppCompatActivity() {
             .putExtra(EXTRA_MAP, map)
     }
 
+    @Inject
+    lateinit var backStackHelper: BackStackHelper
+
     private lateinit var b: ActivityMapBinding
 
     private var map: Map? = null
@@ -29,6 +34,8 @@ class MapActivity : DaggerAppCompatActivity() {
 
         b = ActivityMapBinding.inflate(layoutInflater)
         setContentView(b.root)
+
+        backStackHelper.addActivity(this)
 
         setSupportActionBar(b.mapActionBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -60,7 +67,7 @@ class MapActivity : DaggerAppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> finish()
+            android.R.id.home -> backStackHelper.finishAll()
             else -> return false
         }
         return true
