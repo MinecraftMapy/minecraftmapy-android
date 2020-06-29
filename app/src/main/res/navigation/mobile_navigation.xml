@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_newest">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="pl.kapiz.minecraftmapy.ui.modules.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_newest"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.newest.NewestFragment"
+        android:label="@string/title_newest"
+        tools:layout="@layout/fragment_maps" />
+
+    <fragment
+        android:id="@+id/navigation_discover"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverFragment"
+        android:label="@string/title_discover"
+        tools:layout="@layout/fragment_maps" />
 
     <fragment
         android:id="@+id/navigation_search"

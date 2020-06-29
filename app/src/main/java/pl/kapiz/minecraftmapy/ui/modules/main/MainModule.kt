@@ -6,10 +6,12 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import pl.kapiz.minecraftmapy.di.ViewModelKey
-import pl.kapiz.minecraftmapy.ui.modules.home.HomeFragment
-import pl.kapiz.minecraftmapy.ui.modules.home.HomeViewModel
+import pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverFragment
+import pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverViewModel
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreViewModel
+import pl.kapiz.minecraftmapy.ui.modules.newest.NewestFragment
+import pl.kapiz.minecraftmapy.ui.modules.newest.NewestViewModel
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchViewModel
 
@@ -18,12 +20,20 @@ import pl.kapiz.minecraftmapy.ui.modules.search.SearchViewModel
 internal abstract class MainModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeHomeFragment(): HomeFragment
+    abstract fun contributeNewestFragment(): NewestFragment
 
     @Binds
     @IntoMap
-    @ViewModelKey(HomeViewModel::class)
-    internal abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
+    @ViewModelKey(NewestViewModel::class)
+    internal abstract fun bindNewestViewModel(viewModel: NewestViewModel): ViewModel
+
+    @ContributesAndroidInjector
+    abstract fun contributeDiscoverFragment(): DiscoverFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DiscoverViewModel::class)
+    internal abstract fun bindDiscoverViewModel(viewModel: DiscoverViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment

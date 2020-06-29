@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">MinecraftMapy</string>
-    <string name="title_home">Home</string>
+    <string name="app_name" translatable="false">MinecraftMapy</string>
+
+    <string name="title_newest">Newest</string>
+    <string name="title_discover">Discover</string>
     <string name="title_search">Search</string>
     <string name="title_more">More</string>
 </resources>

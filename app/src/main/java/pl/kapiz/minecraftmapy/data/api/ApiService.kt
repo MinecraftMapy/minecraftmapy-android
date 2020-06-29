@@ -11,5 +11,9 @@ import javax.inject.Singleton
 interface ApiService {
 
     @GET("map")
-    fun getMaps(@Query("page") page: Int = 1): RefreshLiveData<ApiResponse<ResponseBody<List<Map>>>>
+    fun getMaps(
+        @Query("page") page: Int,
+        @Query("sort_by") sortBy: Int?,
+        @Query("s") seed: Int?
+    ): RefreshLiveData<ApiResponse<ResponseBody<List<Map>>>>
 }

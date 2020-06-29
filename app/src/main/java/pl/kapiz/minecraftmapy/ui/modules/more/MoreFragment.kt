@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.databinding.FragmentMoreBinding
 import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
@@ -26,17 +25,5 @@ class MoreFragment : DaggerFragment() {
     ): View? {
         b = FragmentMoreBinding.inflate(inflater, container, false)
         return b.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initView()
-    }
-
-    private fun initView() {
-        moreViewModel.init()
-        moreViewModel.text.observe(viewLifecycleOwner, Observer {
-            b.textNotifications.text = it
-        })
     }
 }

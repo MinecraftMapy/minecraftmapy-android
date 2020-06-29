@@ -26,7 +26,8 @@ class MainActivity : DaggerAppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home,
+                R.id.navigation_newest,
+                R.id.navigation_discover,
                 R.id.navigation_search,
                 R.id.navigation_more
             )

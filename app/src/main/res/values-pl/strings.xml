@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_newest">Najnowsze</string>
+    <string name="title_discover">Odkrywaj</string>
+    <string name="title_search">Szukaj</string>
+    <string name="title_more">Więcej</string>
+</resources>

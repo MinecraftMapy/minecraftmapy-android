@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.modules.home.HomeFragment">
+        tools:context=".ui.modules.newest.NewestFragment">
 
         <FrameLayout
             android:id="@+id/map_progress"
