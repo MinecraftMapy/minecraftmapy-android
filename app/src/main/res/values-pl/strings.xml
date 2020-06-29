@@ -4,4 +4,6 @@
     <string name="title_discover">Odkrywaj</string>
     <string name="title_search">Szukaj</string>
     <string name="title_more">Więcej</string>
+
+    <string name="format_author">Wykonał: %s</string>
 </resources>

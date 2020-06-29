@@ -22,6 +22,7 @@ class MapItem(map: Map) : ModelAbstractBindingItem<Map, ItemMapBinding>(map) {
             mapTitle.text = model.info.title
             mapDescription.text = model.info.description.replace("\n", " ")
                 .trimEnd(150)
+            mapAuthor.text = root.context.getString(R.string.format_author, model.author.username)
 
             mapImage.load(model.images[0]) {
                 crossfade(true)

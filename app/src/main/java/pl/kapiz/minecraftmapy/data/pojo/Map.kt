@@ -4,6 +4,7 @@ import java.io.Serializable
 
 data class Map(
     val id: Long,
+    val author: Author,
     val info: Info,
     val images: List<String>
 ) : Serializable {
@@ -11,6 +12,10 @@ data class Map(
         const val SORT_BY_NEWEST = 1
         const val SORT_BY_DISCOVER = 2
     }
+
+    data class Author(
+        val username: String
+    ) : Serializable
 
     data class Info(
         val title: String,

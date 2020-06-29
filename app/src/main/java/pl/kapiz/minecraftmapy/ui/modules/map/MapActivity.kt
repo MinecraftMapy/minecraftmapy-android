@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import coil.api.load
 import dagger.android.support.DaggerAppCompatActivity
+import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.ActivityMapBinding
 
@@ -44,6 +45,7 @@ class MapActivity : DaggerAppCompatActivity() {
             b.apply {
                 mapTitle.text = map.info.title
                 mapDescription.text = map.info.description
+                mapAuthor.text = getString(R.string.format_author, map.author.username)
 
                 mapCarousel.pageCount = map.images.size
                 mapCarousel.setImageListener { position, imageView ->

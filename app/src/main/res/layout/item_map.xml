@@ -34,12 +34,19 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
             tools:text="Earth Collision" />
 
         <TextView
-            android:id="@+id/map_description"
+            android:id="@+id/map_author"
             style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            tools:text="By: Kalendarz2" />
+
+        <TextView
+            android:id="@+id/map_description"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Jesteś kosmitą wysłanym na Ziemię. Twoim zadaniem było badanie zwierząt. Jednak podczas lądowania coś poszło nie tak..." />

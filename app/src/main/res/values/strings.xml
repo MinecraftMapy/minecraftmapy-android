@@ -5,4 +5,6 @@
     <string name="title_discover">Discover</string>
     <string name="title_search">Search</string>
     <string name="title_more">More</string>
+
+    <string name="format_author">By: %s</string>
 </resources>
