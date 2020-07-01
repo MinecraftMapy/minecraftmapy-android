@@ -12,6 +12,11 @@ import javax.inject.Inject
 
 class SearchFragment : DaggerFragment() {
 
+    companion object {
+
+        fun newInstance() = SearchFragment()
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val searchViewModel: SearchViewModel by viewModels { viewModelFactory }

@@ -12,6 +12,11 @@ import javax.inject.Inject
 
 class MoreFragment : DaggerFragment() {
 
+    companion object {
+
+        fun newInstance() = MoreFragment()
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val moreViewModel: MoreViewModel by viewModels { viewModelFactory }

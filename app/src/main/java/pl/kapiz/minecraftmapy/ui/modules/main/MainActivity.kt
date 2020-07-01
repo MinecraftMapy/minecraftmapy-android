@@ -1,6 +1,7 @@
 package pl.kapiz.minecraftmapy.ui.modules.main
 
 import android.os.Bundle
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -12,6 +13,7 @@ import pl.kapiz.minecraftmapy.databinding.ActivityMainBinding
 class MainActivity : DaggerAppCompatActivity() {
 
     private lateinit var b: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +23,8 @@ class MainActivity : DaggerAppCompatActivity() {
 
         setSupportActionBar(b.navActionBar)
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        navController = findNavController(R.id.nav_host_fragment)
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_newest,
@@ -34,5 +35,9 @@ class MainActivity : DaggerAppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         b.navView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
     }
 }

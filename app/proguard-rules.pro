@@ -20,4 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.synnapps.carouselview.** { *; }
+-keep class com.synnapps.carouselview.* { *; }
+-keep class pl.kapiz.minecraftmapy.data.pojo.*

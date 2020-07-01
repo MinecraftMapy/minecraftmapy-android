@@ -9,13 +9,23 @@
         android:id="@+id/navigation_newest"
         android:name="pl.kapiz.minecraftmapy.ui.modules.newest.NewestFragment"
         android:label="@string/title_newest"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps">
+
+        <action
+            android:id="@+id/action_navigation_newest_to_map"
+            app:destination="@id/map" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_discover"
         android:name="pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverFragment"
         android:label="@string/title_discover"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps">
+
+        <action
+            android:id="@+id/action_navigation_discover_to_map"
+            app:destination="@id/map" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
@@ -28,4 +38,16 @@
         android:name="pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment"
         android:label="@string/title_more"
         tools:layout="@layout/fragment_more" />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.map.MapFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_map">
+
+        <argument
+            android:name="map"
+            app:argType="pl.kapiz.minecraftmapy.data.pojo.Map"
+            app:nullable="false" />
+    </fragment>
 </navigation>

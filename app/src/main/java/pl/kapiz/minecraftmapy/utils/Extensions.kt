@@ -1,5 +1,8 @@
 package pl.kapiz.minecraftmapy.utils
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
 
@@ -19,4 +22,10 @@ inline fun RecyclerView.setEndlessScrollListener(
             }
         })
     }
+}
+
+fun <T> LiveData<T>.observeNonNull(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, Observer<T> {
+        if (it !== null) observer.onChanged(it)
+    })
 }

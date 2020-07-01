@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import pl.kapiz.minecraftmapy.di.ViewModelKey
 import pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverFragment
 import pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverViewModel
+import pl.kapiz.minecraftmapy.ui.modules.map.MapFragment
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreViewModel
 import pl.kapiz.minecraftmapy.ui.modules.newest.NewestFragment
@@ -18,6 +19,11 @@ import pl.kapiz.minecraftmapy.ui.modules.search.SearchViewModel
 @Suppress("unused")
 @Module
 internal abstract class MainModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    internal abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeNewestFragment(): NewestFragment
@@ -50,4 +56,7 @@ internal abstract class MainModule {
     @IntoMap
     @ViewModelKey(MoreViewModel::class)
     internal abstract fun bindMoreViewModel(viewModel: MoreViewModel): ViewModel
+
+    @ContributesAndroidInjector
+    abstract fun contributeMapFragment(): MapFragment
 }
