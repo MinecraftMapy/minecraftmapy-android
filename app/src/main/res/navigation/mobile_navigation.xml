@@ -13,7 +13,11 @@
 
         <action
             android:id="@+id/action_navigation_newest_to_map"
-            app:destination="@id/map" />
+            app:destination="@id/map"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -24,7 +28,11 @@
 
         <action
             android:id="@+id/action_navigation_discover_to_map"
-            app:destination="@id/map" />
+            app:destination="@id/map"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
