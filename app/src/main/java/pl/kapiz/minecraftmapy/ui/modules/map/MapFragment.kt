@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import dagger.android.support.DaggerFragment
-import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.databinding.FragmentMapBinding
 import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
 import pl.kapiz.minecraftmapy.utils.observeNonNull
+import pl.kapiz.minecraftmapy.utils.setUnderlined
 import javax.inject.Inject
 
 class MapFragment : DaggerFragment() {
@@ -31,7 +31,10 @@ class MapFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        b = FragmentMapBinding.inflate(inflater, container, false)
+        b = FragmentMapBinding.inflate(inflater, container, false).apply {
+            viewmodel = mapViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return b.root
     }
 
@@ -45,18 +48,12 @@ class MapFragment : DaggerFragment() {
             init(args.map)
 
             map.observeNonNull(viewLifecycleOwner, Observer { map ->
-                b.apply {
-                    mapTitle.text = map.info.title
-                    mapDescription.text = map.info.description
-                    mapAuthor.text = getString(R.string.format_author, map.author.username)
-
-                    mapCarousel.apply {
-                        setImageListener { position, imageView ->
-                            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-                            imageView.load(map.images[position])
-                        }
-                        pageCount = map.images.size
+                b.mapCarousel.apply {
+                    setImageListener { position, imageView ->
+                        imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+                        imageView.load(map.images[position])
                     }
+                    pageCount = map.images.size
                 }
             })
 
@@ -65,6 +62,6 @@ class MapFragment : DaggerFragment() {
             })
         }
 
-        b.mapAuthor.setOnClickListener(mapViewModel::onAuthorClicked)
+        b.mapAuthor.setUnderlined()
     }
 }

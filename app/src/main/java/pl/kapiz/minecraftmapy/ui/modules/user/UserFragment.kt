@@ -13,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import dagger.android.support.DaggerFragment
-import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentUserBinding
-import pl.kapiz.minecraftmapy.ui.base.MapItem
 import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
-import pl.kapiz.minecraftmapy.utils.observeNonNull
+import pl.kapiz.minecraftmapy.ui.modules.map.MapItem
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
 
@@ -38,7 +36,10 @@ class UserFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        b = FragmentUserBinding.inflate(inflater, container, false)
+        b = FragmentUserBinding.inflate(inflater, container, false).apply {
+            viewmodel = userViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return b.root
     }
 
@@ -52,24 +53,6 @@ class UserFragment : DaggerFragment() {
 
         userViewModel.apply {
             init(args.username)
-
-            loading.observe(viewLifecycleOwner, Observer { loading ->
-                b.userContainer.visibility = if (loading) View.GONE else View.VISIBLE
-                b.userProgress.visibility = if (loading) View.VISIBLE else View.GONE
-            })
-
-            user.observeNonNull(viewLifecycleOwner, Observer { user ->
-                b.apply {
-                    userName.text = user.info.username
-                    userDescription.text = user.info.description
-                    userMapListTitle.text = getString(R.string.format_maps, user.stats.mapCount)
-                }
-            })
-
-            mapsLoading.observe(viewLifecycleOwner, Observer { loading ->
-                b.userMapList.visibility = if (loading) View.GONE else View.VISIBLE
-                b.userMapListProgress.visibility = if (loading) View.VISIBLE else View.GONE
-            })
 
             maps.observe(viewLifecycleOwner, Observer { maps ->
                 mapsAdapter.setNewList(maps)
@@ -89,6 +72,7 @@ class UserFragment : DaggerFragment() {
                 onClickListener = userViewModel::onItemClicked
             }
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            isNestedScrollingEnabled = false
         }
     }
 }

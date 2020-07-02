@@ -10,7 +10,7 @@ import com.mikepenz.fastadapter.IAdapter
 import pl.kapiz.minecraftmapy.data.api.Api
 import pl.kapiz.minecraftmapy.data.api.ApiResponse
 import pl.kapiz.minecraftmapy.data.pojo.Map
-import pl.kapiz.minecraftmapy.ui.base.MapItem
+import pl.kapiz.minecraftmapy.ui.modules.map.MapItem
 import pl.kapiz.minecraftmapy.utils.LiveEvent
 import javax.inject.Inject
 

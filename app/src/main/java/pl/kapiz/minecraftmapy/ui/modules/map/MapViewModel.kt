@@ -1,6 +1,5 @@
 package pl.kapiz.minecraftmapy.ui.modules.map
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,8 +20,7 @@ class MapViewModel @Inject constructor() : ViewModel() {
         _map.value = map
     }
 
-    @Suppress("unused_parameter")
-    fun onAuthorClicked(view: View) {
+    fun onAuthorClicked() {
         map.value?.author?.username?.let {
             _action.value = MapFragmentDirections.actionMapToUser(it)
         }

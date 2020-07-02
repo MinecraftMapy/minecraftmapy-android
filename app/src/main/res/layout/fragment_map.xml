@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="pl.kapiz.minecraftmapy.ui.modules.map.MapViewModel" />
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/map_content"
         android:layout_width="match_parent"
@@ -19,17 +26,34 @@
                 style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{viewmodel.map.info.title}"
                 tools:text="Earth Collision" />
 
-            <TextView
-                android:id="@+id/map_author"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                tools:text="By: Kalendarz2" />
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="@string/map_author_by" />
+
+                <TextView
+                    android:id="@+id/map_author"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{() -> viewmodel.onAuthorClicked()}"
+                    android:text="@{viewmodel.map.author.username}"
+                    tools:text="Kalendarz2" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/map_description"
@@ -38,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:autoLink="web|email"
+                android:text="@{viewmodel.map.info.description}"
                 tools:text="Jesteś kosmitą wysłanym na Ziemię. Twoim zadaniem było badanie zwierząt. Jednak podczas lądowania coś poszło nie tak...\n\nEarth collision to mapa przygodowa, w której musisz wydostać się z Ziemi i wrócić na swoją planetę.\nWykonuj poszczególne etapy, aby zdobyć części do budowy nowej rakiety.\nMapa przeznaczona jest dla od 1 do 6 graczy.\n\nUWAGA! Nie polecam pobierać tej mapy. Na dzisiejsze standardy jest ona strasznie słaba i gra w nią to tylko strata czasu. Zamiast tego, bardziej proponuję zagranie w tę mapę: https://minecraftmapy.pl/mapa/skZOwH, chociaż ona również zdążyła się już zestarzeć. " />
 
             <androidx.constraintlayout.widget.ConstraintLayout

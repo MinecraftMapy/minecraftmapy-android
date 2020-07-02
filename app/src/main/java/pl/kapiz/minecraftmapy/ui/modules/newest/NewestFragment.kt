@@ -15,7 +15,7 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
-import pl.kapiz.minecraftmapy.ui.base.MapItem
+import pl.kapiz.minecraftmapy.ui.modules.map.MapItem
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
@@ -50,7 +50,11 @@ class NewestFragment : DaggerFragment() {
     }
 
     private fun initView() {
-        mapsAdapter = ModelAdapter { MapItem(it) }
+        mapsAdapter = ModelAdapter {
+            MapItem(
+                it
+            )
+        }
 
         newestViewModel.apply {
             init()

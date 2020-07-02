@@ -6,6 +6,8 @@
     <string name="title_search">Search</string>
     <string name="title_more">More</string>
 
-    <string name="format_author">By: <u>%s</u></string>
+    <string name="map_author_by">By:</string>
+    <string name="format_author">By: %s</string>
+
     <string name="format_maps">Maps (%d)</string>
 </resources>
