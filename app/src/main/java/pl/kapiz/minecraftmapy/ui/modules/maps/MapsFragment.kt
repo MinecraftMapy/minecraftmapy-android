@@ -1,4 +1,4 @@
-package pl.kapiz.minecraftmapy.ui.modules.discover
+package pl.kapiz.minecraftmapy.ui.modules.maps
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,21 +15,20 @@ import com.mikepenz.fastadapter.adapters.ModelAdapter
 import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
-import pl.kapiz.minecraftmapy.ui.modules.map.MapItem
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
 
-class DiscoverFragment : DaggerFragment() {
+class MapsFragment : DaggerFragment() {
 
     companion object {
 
-        fun newInstance() = DiscoverFragment()
+        fun newInstance() = MapsFragment()
     }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val discoverViewModel: DiscoverViewModel by viewModels { viewModelFactory }
+    private val mapsViewModel: MapsViewModel by viewModels { viewModelFactory }
 
     private lateinit var b: FragmentMapsBinding
 
@@ -40,7 +39,10 @@ class DiscoverFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        b = FragmentMapsBinding.inflate(inflater, container, false)
+        b = FragmentMapsBinding.inflate(inflater, container, false).apply {
+            viewmodel = mapsViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return b.root
     }
 
@@ -56,13 +58,8 @@ class DiscoverFragment : DaggerFragment() {
             )
         }
 
-        discoverViewModel.apply {
+        mapsViewModel.apply {
             init()
-
-            loading.observe(viewLifecycleOwner, Observer { loading ->
-                b.mapList.visibility = if (loading) View.GONE else View.VISIBLE
-                b.mapProgress.visibility = if (loading) View.VISIBLE else View.GONE
-            })
 
             maps.observe(viewLifecycleOwner, Observer { maps ->
                 mapsAdapter.setNewList(maps)
@@ -76,10 +73,10 @@ class DiscoverFragment : DaggerFragment() {
         b.mapList.apply {
             layoutManager = LinearLayoutManager(context)
             setEndlessScrollListener(20) {
-                discoverViewModel.downloadNextPage()
+                mapsViewModel.downloadNextPage()
             }
             adapter = FastAdapter.with(mapsAdapter).apply {
-                onClickListener = discoverViewModel::onItemClicked
+                onClickListener = mapsViewModel::onItemClicked
             }
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }

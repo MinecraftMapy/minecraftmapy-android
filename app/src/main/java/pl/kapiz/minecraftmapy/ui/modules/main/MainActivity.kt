@@ -26,8 +26,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_newest,
-                R.id.navigation_discover,
+                R.id.navigation_maps,
                 R.id.navigation_search,
                 R.id.navigation_more
             )

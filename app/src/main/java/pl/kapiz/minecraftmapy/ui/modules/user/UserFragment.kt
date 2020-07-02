@@ -16,7 +16,7 @@ import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentUserBinding
 import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
-import pl.kapiz.minecraftmapy.ui.modules.map.MapItem
+import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
 
@@ -49,7 +49,11 @@ class UserFragment : DaggerFragment() {
     }
 
     private fun initView() {
-        mapsAdapter = ModelAdapter { MapItem(it) }
+        mapsAdapter = ModelAdapter {
+            MapItem(
+                it
+            )
+        }
 
         userViewModel.apply {
             init(args.username)

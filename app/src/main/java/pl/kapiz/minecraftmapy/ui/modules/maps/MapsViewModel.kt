@@ -1,4 +1,4 @@
-package pl.kapiz.minecraftmapy.ui.modules.discover
+package pl.kapiz.minecraftmapy.ui.modules.maps
 
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -10,12 +10,11 @@ import com.mikepenz.fastadapter.IAdapter
 import pl.kapiz.minecraftmapy.data.api.Api
 import pl.kapiz.minecraftmapy.data.api.ApiResponse
 import pl.kapiz.minecraftmapy.data.pojo.Map
-import pl.kapiz.minecraftmapy.ui.modules.map.MapItem
 import pl.kapiz.minecraftmapy.utils.LiveEvent
 import javax.inject.Inject
 import kotlin.random.Random
 
-class DiscoverViewModel @Inject constructor(private val api: Api) : ViewModel() {
+class MapsViewModel @Inject constructor(private val api: Api) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -56,7 +55,7 @@ class DiscoverViewModel @Inject constructor(private val api: Api) : ViewModel() 
         item: MapItem,
         position: Int
     ): Boolean {
-        _action.value = DiscoverFragmentDirections.actionNavigationDiscoverToMap(item.model)
+        _action.value = MapsFragmentDirections.actionNavigationMapsToMap(item.model)
         return true
     }
 }
