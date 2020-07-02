@@ -27,6 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true"
                 tools:text="By: Kalendarz2" />
 
             <TextView

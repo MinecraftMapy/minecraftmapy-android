@@ -5,19 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapBinding
+import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
+import pl.kapiz.minecraftmapy.utils.observeNonNull
+import javax.inject.Inject
 
 class MapFragment : DaggerFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val mapViewModel: MapViewModel by viewModels { viewModelFactory }
+
     private lateinit var b: FragmentMapBinding
     private val args: MapFragmentArgs by navArgs()
-
-    private lateinit var map: Map
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,23 +37,34 @@ class MapFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        map = args.map
         initView()
     }
 
     private fun initView() {
-        b.apply {
-            mapTitle.text = map.info.title
-            mapDescription.text = map.info.description
-            mapAuthor.text = getString(R.string.format_author, map.author.username)
+        mapViewModel.apply {
+            init(args.map)
 
-            mapCarousel.apply {
-                setImageListener { position, imageView ->
-                    imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-                    imageView.load(map.images[position])
+            map.observeNonNull(viewLifecycleOwner, Observer { map ->
+                b.apply {
+                    mapTitle.text = map.info.title
+                    mapDescription.text = map.info.description
+                    mapAuthor.text = getString(R.string.format_author, map.author.username)
+
+                    mapCarousel.apply {
+                        setImageListener { position, imageView ->
+                            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+                            imageView.load(map.images[position])
+                        }
+                        pageCount = map.images.size
+                    }
                 }
-                pageCount = map.images.size
-            }
+            })
+
+            action.observe(viewLifecycleOwner, Observer { action ->
+                findNavController().navigate(action)
+            })
         }
+
+        b.mapAuthor.setOnClickListener(mapViewModel::onAuthorClicked)
     }
 }

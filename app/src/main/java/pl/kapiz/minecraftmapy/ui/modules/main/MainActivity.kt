@@ -1,6 +1,7 @@
 package pl.kapiz.minecraftmapy.ui.modules.main
 
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,9 +19,7 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        b = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(b.root)
-
+        b = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(b.navActionBar)
 
         navController = findNavController(R.id.nav_host_fragment)

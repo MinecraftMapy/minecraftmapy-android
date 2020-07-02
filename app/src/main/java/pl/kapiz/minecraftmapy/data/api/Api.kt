@@ -13,4 +13,11 @@ class Api @Inject constructor(private val apiService: ApiService) {
             sortBy = sortBy,
             seed = seed
         )
+
+    fun getUserMaps(username: String, page: Int = 1) = apiService.getUserMaps(
+        username = username,
+        page = page
+    )
+
+    fun getUser(username: String) = apiService.getUser(username)
 }

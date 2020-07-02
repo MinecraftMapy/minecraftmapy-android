@@ -57,5 +57,33 @@
             android:name="map"
             app:argType="pl.kapiz.minecraftmapy.data.pojo.Map"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/action_map_to_user"
+            app:destination="@id/user"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.user.UserFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_user">
+
+        <argument
+            android:name="username"
+            app:argType="string"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/action_user_to_map"
+            app:destination="@id/map"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

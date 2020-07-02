@@ -9,12 +9,15 @@ import pl.kapiz.minecraftmapy.di.ViewModelKey
 import pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverFragment
 import pl.kapiz.minecraftmapy.ui.modules.discover.DiscoverViewModel
 import pl.kapiz.minecraftmapy.ui.modules.map.MapFragment
+import pl.kapiz.minecraftmapy.ui.modules.map.MapViewModel
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreViewModel
 import pl.kapiz.minecraftmapy.ui.modules.newest.NewestFragment
 import pl.kapiz.minecraftmapy.ui.modules.newest.NewestViewModel
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchViewModel
+import pl.kapiz.minecraftmapy.ui.modules.user.UserFragment
+import pl.kapiz.minecraftmapy.ui.modules.user.UserViewModel
 
 @Suppress("unused")
 @Module
@@ -23,7 +26,7 @@ internal abstract class MainModule {
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
-    internal abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+    abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeNewestFragment(): NewestFragment
@@ -31,7 +34,7 @@ internal abstract class MainModule {
     @Binds
     @IntoMap
     @ViewModelKey(NewestViewModel::class)
-    internal abstract fun bindNewestViewModel(viewModel: NewestViewModel): ViewModel
+    abstract fun bindNewestViewModel(viewModel: NewestViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeDiscoverFragment(): DiscoverFragment
@@ -39,7 +42,7 @@ internal abstract class MainModule {
     @Binds
     @IntoMap
     @ViewModelKey(DiscoverViewModel::class)
-    internal abstract fun bindDiscoverViewModel(viewModel: DiscoverViewModel): ViewModel
+    abstract fun bindDiscoverViewModel(viewModel: DiscoverViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment
@@ -47,7 +50,7 @@ internal abstract class MainModule {
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
-    internal abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
+    abstract fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeMoreFragment(): MoreFragment
@@ -55,8 +58,21 @@ internal abstract class MainModule {
     @Binds
     @IntoMap
     @ViewModelKey(MoreViewModel::class)
-    internal abstract fun bindMoreViewModel(viewModel: MoreViewModel): ViewModel
+    abstract fun bindMoreViewModel(viewModel: MoreViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeMapFragment(): MapFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MapViewModel::class)
+    abstract fun bindMapViewModel(viewModel: MapViewModel): ViewModel
+
+    @ContributesAndroidInjector
+    abstract fun contributeUserFragment(): UserFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserViewModel::class)
+    abstract fun bindUserViewModel(viewModel: UserViewModel): ViewModel
 }

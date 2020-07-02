@@ -16,7 +16,6 @@ import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
 import pl.kapiz.minecraftmapy.ui.base.MapItem
-import pl.kapiz.minecraftmapy.ui.modules.main.MainActivity
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
@@ -35,9 +34,6 @@ class NewestFragment : DaggerFragment() {
     private lateinit var b: FragmentMapsBinding
 
     private lateinit var mapsAdapter: ModelAdapter<Map, MapItem>
-    private lateinit var adapter: FastAdapter<MapItem>
-
-    private val activity by lazy { getActivity() as MainActivity }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,20 +55,18 @@ class NewestFragment : DaggerFragment() {
         newestViewModel.apply {
             init()
 
+            loading.observe(viewLifecycleOwner, Observer { loading ->
+                b.mapList.visibility = if (loading) View.GONE else View.VISIBLE
+                b.mapProgress.visibility = if (loading) View.VISIBLE else View.GONE
+            })
+
             maps.observe(viewLifecycleOwner, Observer { maps ->
-                b.mapProgress.visibility = View.GONE
-                b.mapList.visibility = View.VISIBLE
                 mapsAdapter.setNewList(maps)
             })
 
-            selectedMap.observeNonNull(viewLifecycleOwner, Observer { map ->
-                val action = NewestFragmentDirections.actionNavigationNewestToMap(map)
+            action.observeNonNull(viewLifecycleOwner, Observer { action ->
                 findNavController().navigate(action)
             })
-        }
-
-        adapter = FastAdapter.with(mapsAdapter).apply {
-            onClickListener = newestViewModel::onItemClicked
         }
 
         b.mapList.apply {
@@ -80,7 +74,9 @@ class NewestFragment : DaggerFragment() {
             setEndlessScrollListener(20) {
                 newestViewModel.downloadNextPage()
             }
-            adapter = this@NewestFragment.adapter
+            adapter = FastAdapter.with(mapsAdapter).apply {
+                onClickListener = newestViewModel::onItemClicked
+            }
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
