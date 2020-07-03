@@ -9,4 +9,6 @@
     <string name="format_author">By: %s</string>
 
     <string name="format_maps">Maps (%d)</string>
+
+    <string name="maps_search">Search</string>
 </resources>

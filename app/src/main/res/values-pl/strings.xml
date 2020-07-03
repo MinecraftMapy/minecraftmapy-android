@@ -8,4 +8,6 @@
     <string name="format_author">Wykonał: %s</string>
 
     <string name="format_maps">Mapy (%d)</string>
+
+    <string name="maps_search">Szukaj</string>
 </resources>

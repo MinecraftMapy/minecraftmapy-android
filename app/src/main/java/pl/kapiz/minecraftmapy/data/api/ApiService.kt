@@ -15,6 +15,7 @@ interface ApiService {
     @GET("map")
     fun getMaps(
         @Query("page") page: Int,
+        @Query("query") query: String?,
         @Query("sort_by") sortBy: Int?,
         @Query("s") seed: Int?
     ): RefreshLiveData<ApiResponse<ResponseBody<List<Map>>>>
