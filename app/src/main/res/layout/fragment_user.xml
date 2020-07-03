@@ -45,12 +45,24 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <ImageView
+                        android:id="@+id/user_avatar"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/black"
+                        android:scaleType="fitXY"
+                        tools:ignore="ContentDescription" />
+
                     <TextView
                         style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        android:gravity="center_horizontal"
                         android:text="@{viewmodel.user.info.username}"
+                        android:textAlignment="center"
                         tools:text="kapi2289" />
 
                     <TextView

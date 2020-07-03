@@ -11,7 +11,10 @@ data class User(
 
     data class Info(
         val username: String,
-        val description: String?
+        val description: String?,
+
+        @SerializedName("avatar_url")
+        val avatarUrl: String
     ) : Serializable
 
     data class Stats(

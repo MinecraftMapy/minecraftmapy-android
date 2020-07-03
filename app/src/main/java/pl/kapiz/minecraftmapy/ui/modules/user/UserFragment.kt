@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.api.load
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import dagger.android.support.DaggerFragment
@@ -17,6 +18,7 @@ import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentUserBinding
 import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
 import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
+import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
 
@@ -50,13 +52,15 @@ class UserFragment : DaggerFragment() {
 
     private fun initView() {
         mapsAdapter = ModelAdapter {
-            MapItem(
-                it
-            )
+            MapItem(it)
         }
 
         userViewModel.apply {
             init(args.username)
+
+            user.observeNonNull(viewLifecycleOwner, Observer { user ->
+                b.userAvatar.load(user.info.avatarUrl)
+            })
 
             maps.observe(viewLifecycleOwner, Observer { maps ->
                 mapsAdapter.setNewList(maps)
