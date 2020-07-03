@@ -10,5 +10,6 @@
 
     <string name="format_maps">Maps (%d)</string>
 
-    <string name="maps_search">Search</string>
+    <string name="menu_maps_search">Search</string>
+    <string name="menu_maps_filter">Filter</string>
 </resources>

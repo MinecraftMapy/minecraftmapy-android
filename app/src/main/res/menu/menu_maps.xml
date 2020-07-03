@@ -5,7 +5,13 @@
     <item
         android:id="@+id/menu_maps_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/maps_search"
+        android:title="@string/menu_maps_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/menu_maps_filter"
+        android:icon="@drawable/ic_filter_black_24"
+        android:title="@string/menu_maps_filter"
         app:showAsAction="ifRoom" />
 </menu>

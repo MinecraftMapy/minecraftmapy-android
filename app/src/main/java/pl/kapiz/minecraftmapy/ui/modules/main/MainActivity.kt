@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.android.support.DaggerAppCompatActivity
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.databinding.ActivityMainBinding
+import pl.kapiz.minecraftmapy.ui.base.OverridesOnBackPressed
 
 class MainActivity : DaggerAppCompatActivity() {
 
@@ -37,5 +38,16 @@ class MainActivity : DaggerAppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
+    }
+
+    override fun onBackPressed() {
+        val navHostFragment = supportFragmentManager.primaryNavigationFragment
+        val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        if (currentFragment is OverridesOnBackPressed) {
+            currentFragment.onBackPressed {
+                super.onBackPressed()
+            }
+        } else super.onBackPressed()
+
     }
 }

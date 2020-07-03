@@ -9,5 +9,6 @@
 
     <string name="format_maps">Mapy (%d)</string>
 
-    <string name="maps_search">Szukaj</string>
+    <string name="menu_maps_search">Szukaj</string>
+    <string name="menu_maps_filter">Filtruj</string>
 </resources>

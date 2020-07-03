@@ -37,7 +37,7 @@ class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), Cor
     val action: LiveData<NavDirections> = _action
 
     private var currentPage = 0
-    private val seed = Random.nextInt(0, 99999)
+    private var seed: Int? = null
 
     private val _searchString = LiveEvent<String>()
     val searchString: LiveData<String> = _searchString
@@ -45,8 +45,23 @@ class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), Cor
     fun init() {
         if (currentPage == 0) {
             _loading.value = true
+            seed = Random.nextInt(0, 99999)
             downloadNextPage()
         }
+    }
+
+    fun refresh() {
+        _searchString.value = null
+        currentPage = 0
+        mapList.clear()
+        init()
+    }
+
+    private fun search() {
+        currentPage = 0
+        mapList.clear()
+        _loading.value = true
+        downloadNextPage()
     }
 
     fun downloadNextPage() {
@@ -87,9 +102,7 @@ class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), Cor
     fun onQueryTextSubmit(query: String?): Boolean {
         if (_searchString.value != query) {
             _searchString.value = query
-            currentPage = 0
-            mapList.clear()
-            init()
+            search()
             return true
         }
         return false

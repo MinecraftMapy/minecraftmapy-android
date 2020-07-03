@@ -14,19 +14,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
 import dagger.android.support.DaggerFragment
+import kotlinx.coroutines.*
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
+import pl.kapiz.minecraftmapy.ui.base.OverridesOnBackPressed
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class MapsFragment : DaggerFragment() {
+class MapsFragment : DaggerFragment(), OverridesOnBackPressed, CoroutineScope {
 
     companion object {
 
         fun newInstance() = MapsFragment()
     }
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Default
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -36,7 +43,6 @@ class MapsFragment : DaggerFragment() {
     private lateinit var mapsAdapter: ModelAdapter<Map, MapItem>
 
     private val searchManager by lazy { activity?.getSystemService(Context.SEARCH_SERVICE) as? SearchManager }
-    private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +84,7 @@ class MapsFragment : DaggerFragment() {
                 findNavController().navigate(action)
             })
 
-            searchString.observeNonNull(viewLifecycleOwner, Observer {
+            searchString.observe(viewLifecycleOwner, Observer {
                 b.mapList.scrollToPosition(0)
             })
         }
@@ -98,7 +104,8 @@ class MapsFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_maps, menu)
 
-        searchView = (menu.findItem(R.id.menu_maps_search).actionView as? SearchView)?.apply {
+        val searchView = (menu.findItem(R.id.menu_maps_search).actionView as? SearchView)
+        searchView?.apply {
             setSearchableInfo(searchManager?.getSearchableInfo(activity?.componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?) = false
@@ -110,5 +117,22 @@ class MapsFragment : DaggerFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return mapsViewModel.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed(default: () -> Unit) {
+        b.mapList.apply {
+            if (computeVerticalScrollOffset() > height / 4 || mapsViewModel.searchString.value != null) {
+                smoothScrollToPosition(0)
+                launch(Dispatchers.Main) {
+                    withTimeout(2000) {
+                        while (layoutManager?.isSmoothScrolling == true) {
+                            delay(100)
+                        }
+                        delay(500)
+                    }
+                    mapsViewModel.refresh()
+                }
+            } else default()
+        }
     }
 }
