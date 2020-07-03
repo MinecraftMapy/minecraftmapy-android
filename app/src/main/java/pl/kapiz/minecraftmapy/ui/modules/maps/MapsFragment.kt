@@ -36,6 +36,7 @@ class MapsFragment : DaggerFragment() {
     private lateinit var mapsAdapter: ModelAdapter<Map, MapItem>
 
     private val searchManager by lazy { activity?.getSystemService(Context.SEARCH_SERVICE) as? SearchManager }
+    private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,13 +98,11 @@ class MapsFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_maps, menu)
 
-        (menu.findItem(R.id.menu_maps_search).actionView as? SearchView)?.apply {
+        searchView = (menu.findItem(R.id.menu_maps_search).actionView as? SearchView)?.apply {
             setSearchableInfo(searchManager?.getSearchableInfo(activity?.componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String?): Boolean =
-                    mapsViewModel.onQueryTextChange(newText)
-
-                override fun onQueryTextSubmit(query: String?): Boolean =
+                override fun onQueryTextChange(newText: String?) = false
+                override fun onQueryTextSubmit(query: String?) =
                     mapsViewModel.onQueryTextSubmit(query)
             })
         }

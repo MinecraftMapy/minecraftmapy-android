@@ -8,15 +8,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.mikepenz.fastadapter.IAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.api.Api
 import pl.kapiz.minecraftmapy.data.api.ApiResponse
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.utils.LiveEvent
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random
 
-class MapsViewModel @Inject constructor(private val api: Api) : ViewModel() {
+class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), CoroutineScope {
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Default
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -76,13 +84,14 @@ class MapsViewModel @Inject constructor(private val api: Api) : ViewModel() {
         }
     }
 
-    fun onQueryTextChange(newText: String?): Boolean = false
-
     fun onQueryTextSubmit(query: String?): Boolean {
-        _searchString.value = query
-        currentPage = 0
-        mapList.clear()
-        init()
-        return true
+        if (_searchString.value != query) {
+            _searchString.value = query
+            currentPage = 0
+            mapList.clear()
+            init()
+            return true
+        }
+        return false
     }
 }
