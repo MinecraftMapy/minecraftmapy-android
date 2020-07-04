@@ -2,6 +2,7 @@ package pl.kapiz.minecraftmapy.ui.modules.maps
 
 import android.view.MenuItem
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,10 +14,9 @@ import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment
 import pl.kapiz.minecraftmapy.utils.LiveEvent
-import javax.inject.Inject
 import kotlin.random.Random
 
-class MapsViewModel @Inject constructor(private val api: Api) : BaseViewModel() {
+class MapsViewModel @ViewModelInject constructor(private val api: Api) : BaseViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -37,13 +37,6 @@ class MapsViewModel @Inject constructor(private val api: Api) : BaseViewModel() 
             seed = Random.nextInt(0, 99999)
             downloadNextPage()
         }
-    }
-
-    fun refresh() {
-        _searchString.value = null
-        currentPage = 0
-        mapList.clear()
-        init()
     }
 
     private fun search() {

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
@@ -22,6 +23,7 @@ import pl.kapiz.minecraftmapy.ui.modules.main.MainActivity
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 
+@AndroidEntryPoint
 class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
 
     private lateinit var mapsAdapter: ModelAdapter<Map, MapItem>
@@ -29,7 +31,7 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
     private val activity by lazy { getActivity() as? MainActivity }
     private val searchManager by lazy { activity?.getSystemService(Context.SEARCH_SERVICE) as? SearchManager }
 
-    override val viewmodel: MapsViewModel by viewModels { viewModelFactory }
+    override val viewmodel: MapsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

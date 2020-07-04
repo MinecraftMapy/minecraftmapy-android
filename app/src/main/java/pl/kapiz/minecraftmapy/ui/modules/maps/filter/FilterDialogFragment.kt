@@ -3,24 +3,21 @@ package pl.kapiz.minecraftmapy.ui.modules.maps.filter
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import dagger.android.support.DaggerAppCompatDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.databinding.DialogFilterBinding
-import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
-import javax.inject.Inject
 
-class FilterDialogFragment : DaggerAppCompatDialogFragment() {
+@AndroidEntryPoint
+class FilterDialogFragment : DialogFragment() {
 
     companion object {
 
         fun newInstance() = FilterDialogFragment()
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val filterDialogViewModel: FilterDialogViewModel by viewModels { viewModelFactory }
-
+    private val viewmodel: FilterDialogViewModel by viewModels()
     private lateinit var b: DialogFilterBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

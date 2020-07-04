@@ -1,6 +1,6 @@
 package pl.kapiz.minecraftmapy.ui.modules.more
 
+import androidx.hilt.lifecycle.ViewModelInject
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
-import javax.inject.Inject
 
-class MoreViewModel @Inject constructor() : BaseViewModel()
+class MoreViewModel @ViewModelInject constructor() : BaseViewModel()

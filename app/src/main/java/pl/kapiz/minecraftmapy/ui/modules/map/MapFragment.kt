@@ -7,15 +7,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import coil.api.load
+import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.databinding.FragmentMapBinding
 import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setUnderlined
 
+@AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map) {
 
-    override val viewmodel: MapViewModel by viewModels { viewModelFactory }
+    override val viewmodel: MapViewModel by viewModels()
     private val args: MapFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

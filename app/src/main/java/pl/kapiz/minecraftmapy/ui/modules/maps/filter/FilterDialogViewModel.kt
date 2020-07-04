@@ -1,6 +1,6 @@
 package pl.kapiz.minecraftmapy.ui.modules.maps.filter
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import javax.inject.Inject
 
-class FilterDialogViewModel @Inject constructor() : ViewModel()
+class FilterDialogViewModel @ViewModelInject constructor() : ViewModel()

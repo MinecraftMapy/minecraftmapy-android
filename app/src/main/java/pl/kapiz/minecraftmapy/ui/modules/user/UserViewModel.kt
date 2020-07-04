@@ -1,6 +1,7 @@
 package pl.kapiz.minecraftmapy.ui.modules.user
 
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +12,8 @@ import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.pojo.User
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
-import javax.inject.Inject
 
-class UserViewModel @Inject constructor(
+class UserViewModel @ViewModelInject constructor(
     val api: Api
 ) : BaseViewModel() {
 

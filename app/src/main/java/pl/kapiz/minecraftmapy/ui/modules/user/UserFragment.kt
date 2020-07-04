@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentUserBinding
@@ -18,9 +19,10 @@ import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
 
+@AndroidEntryPoint
 class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
 
-    override val viewmodel: UserViewModel by viewModels { viewModelFactory }
+    override val viewmodel: UserViewModel by viewModels()
     private val args: UserFragmentArgs by navArgs()
 
     private lateinit var mapsAdapter: ModelAdapter<Map, MapItem>

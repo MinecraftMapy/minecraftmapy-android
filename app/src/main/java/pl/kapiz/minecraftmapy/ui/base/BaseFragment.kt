@@ -8,18 +8,13 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import dagger.android.support.DaggerFragment
 import pl.kapiz.minecraftmapy.utils.observeNonNull
-import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
-    DaggerFragment() {
+abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     protected abstract val viewmodel: BaseViewModel
 
     protected lateinit var b: B
