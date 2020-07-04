@@ -68,16 +68,15 @@ class MapsFragment : DaggerFragment(), OverridesOnBackPressed, CoroutineScope {
 
     private fun initView() {
         mapsAdapter = ModelAdapter {
-            MapItem(
-                it
-            )
+            MapItem(it)
         }
 
         mapsViewModel.apply {
             init()
 
-            maps.observe(viewLifecycleOwner, Observer { maps ->
-                mapsAdapter.setNewList(maps)
+            maps.observeNonNull(viewLifecycleOwner, Observer { maps ->
+                val new = maps - mapsAdapter.adapterItems.map { it.model }
+                mapsAdapter.add(new)
             })
 
             action.observeNonNull(viewLifecycleOwner, Observer { action ->
