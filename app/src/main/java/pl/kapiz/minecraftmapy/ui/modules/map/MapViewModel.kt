@@ -2,21 +2,16 @@ package pl.kapiz.minecraftmapy.ui.modules.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavDirections
 import pl.kapiz.minecraftmapy.data.pojo.Map
-import pl.kapiz.minecraftmapy.utils.LiveEvent
+import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import javax.inject.Inject
 
-class MapViewModel @Inject constructor() : ViewModel() {
+class MapViewModel @Inject constructor() : BaseViewModel() {
 
     private val _map = MutableLiveData<Map>()
     val map: LiveData<Map> = _map
 
-    private val _action = LiveEvent<NavDirections>()
-    val action: LiveData<NavDirections> = _action
-
-    fun init(map: Map) {
+    fun setMap(map: Map) {
         _map.value = map
     }
 

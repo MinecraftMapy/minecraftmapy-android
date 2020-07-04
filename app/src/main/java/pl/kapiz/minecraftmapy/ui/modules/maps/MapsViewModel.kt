@@ -5,26 +5,18 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavDirections
 import com.mikepenz.fastadapter.IAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.api.Api
 import pl.kapiz.minecraftmapy.data.api.ApiResponse
 import pl.kapiz.minecraftmapy.data.pojo.Map
+import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
+import pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment
 import pl.kapiz.minecraftmapy.utils.LiveEvent
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random
 
-class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), CoroutineScope {
-
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Default
+class MapsViewModel @Inject constructor(private val api: Api) : BaseViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -33,16 +25,13 @@ class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), Cor
     private val _maps = MediatorLiveData<List<Map>>()
     val maps: LiveData<List<Map>> = _maps
 
-    private val _action = LiveEvent<NavDirections>()
-    val action: LiveData<NavDirections> = _action
-
     private var currentPage = 0
     private var seed: Int? = null
 
     private val _searchString = LiveEvent<String>()
     val searchString: LiveData<String> = _searchString
 
-    fun init() {
+    override fun init() {
         if (currentPage == 0) {
             _loading.value = true
             seed = Random.nextInt(0, 99999)
@@ -95,6 +84,10 @@ class MapsViewModel @Inject constructor(private val api: Api) : ViewModel(), Cor
     fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_maps_search -> true
+            R.id.menu_maps_filter -> {
+                _dialog.value = FilterDialogFragment.newInstance()
+                true
+            }
             else -> false
         }
     }

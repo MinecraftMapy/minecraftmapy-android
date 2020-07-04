@@ -4,20 +4,18 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavDirections
 import com.mikepenz.fastadapter.IAdapter
 import pl.kapiz.minecraftmapy.data.api.Api
 import pl.kapiz.minecraftmapy.data.api.ApiResponse
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.pojo.User
+import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
-import pl.kapiz.minecraftmapy.utils.LiveEvent
 import javax.inject.Inject
 
 class UserViewModel @Inject constructor(
     val api: Api
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -33,9 +31,6 @@ class UserViewModel @Inject constructor(
     val maps: LiveData<List<Map>> = _maps
 
     private var currentMapsPage = 0
-
-    private val _action = LiveEvent<NavDirections>()
-    val action: LiveData<NavDirections> = _action
 
     fun init(username: String) {
         if (user.value == null) {

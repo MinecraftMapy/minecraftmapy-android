@@ -1,0 +1,62 @@
+package pl.kapiz.minecraftmapy.ui.base
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import dagger.android.support.DaggerFragment
+import pl.kapiz.minecraftmapy.utils.observeNonNull
+import javax.inject.Inject
+
+abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
+    DaggerFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    protected abstract val viewmodel: BaseViewModel
+
+    protected lateinit var b: B
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        b = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        b.lifecycleOwner = viewLifecycleOwner
+        return b.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewmodel.apply {
+            init()
+
+            action.observeNonNull(viewLifecycleOwner, Observer { action ->
+                findNavController().navigate(action)
+            })
+
+            dialog.observeNonNull(viewLifecycleOwner, Observer { dialog ->
+                activity?.supportFragmentManager?.let {
+                    dialog.show(it, dialog::class.java.simpleName)
+                }
+            })
+
+            toast.observeNonNull(viewLifecycleOwner, Observer { toast ->
+                Toast.makeText(context, toast, Toast.LENGTH_SHORT).show()
+            })
+        }
+
+        initView()
+    }
+
+    protected open fun initView() {}
+}

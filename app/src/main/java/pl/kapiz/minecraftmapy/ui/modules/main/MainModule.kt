@@ -10,6 +10,8 @@ import pl.kapiz.minecraftmapy.ui.modules.map.MapFragment
 import pl.kapiz.minecraftmapy.ui.modules.map.MapViewModel
 import pl.kapiz.minecraftmapy.ui.modules.maps.MapsFragment
 import pl.kapiz.minecraftmapy.ui.modules.maps.MapsViewModel
+import pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment
+import pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogViewModel
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment
 import pl.kapiz.minecraftmapy.ui.modules.more.MoreViewModel
 import pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment
@@ -33,6 +35,14 @@ internal abstract class MainModule {
     @IntoMap
     @ViewModelKey(MapsViewModel::class)
     abstract fun bindMapsViewModel(viewModel: MapsViewModel): ViewModel
+
+    @ContributesAndroidInjector
+    abstract fun contributeFilterDialogFragment(): FilterDialogFragment
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FilterDialogViewModel::class)
+    abstract fun bindFilterDialogViewModel(viewModel: FilterDialogViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun contributeSearchFragment(): SearchFragment

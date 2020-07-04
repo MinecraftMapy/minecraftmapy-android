@@ -1,34 +1,11 @@
 package pl.kapiz.minecraftmapy.ui.modules.more
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import dagger.android.support.DaggerFragment
+import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.databinding.FragmentMoreBinding
-import pl.kapiz.minecraftmapy.ui.base.ViewModelFactory
-import javax.inject.Inject
+import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 
-class MoreFragment : DaggerFragment() {
+class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more) {
 
-    companion object {
-
-        fun newInstance() = MoreFragment()
-    }
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val moreViewModel: MoreViewModel by viewModels { viewModelFactory }
-
-    private lateinit var b: FragmentMoreBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        b = FragmentMoreBinding.inflate(inflater, container, false)
-        return b.root
-    }
+    override val viewmodel: MoreViewModel by viewModels { viewModelFactory }
 }
