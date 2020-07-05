@@ -32,7 +32,6 @@ internal class ApiModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl("https://minecraftmapy.pl/api/")
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(LiveDataCallAdapterFactory())
         .client(okHttpClient)
         .build()
 

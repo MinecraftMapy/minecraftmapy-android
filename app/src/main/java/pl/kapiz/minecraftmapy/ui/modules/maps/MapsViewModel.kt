@@ -3,20 +3,21 @@ package pl.kapiz.minecraftmapy.ui.modules.maps
 import android.view.MenuItem
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.mikepenz.fastadapter.IAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.data.api.Api
-import pl.kapiz.minecraftmapy.data.api.ApiResponse
 import pl.kapiz.minecraftmapy.data.pojo.Map
+import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment
 import pl.kapiz.minecraftmapy.utils.LiveEvent
 import kotlin.random.Random
 
-class MapsViewModel @ViewModelInject constructor(private val api: Api) : BaseViewModel() {
+class MapsViewModel @ViewModelInject constructor(
+    private val mapRepository: MapRepository
+) : BaseViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -47,20 +48,24 @@ class MapsViewModel @ViewModelInject constructor(private val api: Api) : BaseVie
     }
 
     fun downloadNextPage() {
-        val page = api.getMaps(
-            page = ++currentPage,
-            query = searchString.value,
-            sortBy = Map.SORT_BY_DISCOVER,
-            seed = seed
-        )
-        _maps.addSource(page) {
-            if (it is ApiResponse.ApiSuccessResponse) {
-                mapList.addAll(it.body.data)
+        viewModelScope.launch {
+            val page = liveData(Dispatchers.IO) {
+                emit(
+                    mapRepository.getMaps(
+                        page = ++currentPage,
+                        query = searchString.value,
+                        sortBy = Map.SORT_BY_DISCOVER,
+                        seed = seed
+                    )
+                )
+            }
+
+            _maps.addSource(page) {
+                mapList.addAll(it.data)
                 _maps.value = mapList
                 _loading.value = false
             }
         }
-        page.refresh()
     }
 
     @Suppress("unused_parameter")

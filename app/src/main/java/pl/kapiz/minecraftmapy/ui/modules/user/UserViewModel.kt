@@ -2,19 +2,20 @@ package pl.kapiz.minecraftmapy.ui.modules.user
 
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.mikepenz.fastadapter.IAdapter
-import pl.kapiz.minecraftmapy.data.api.Api
-import pl.kapiz.minecraftmapy.data.api.ApiResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.pojo.User
+import pl.kapiz.minecraftmapy.data.repository.MapRepository
+import pl.kapiz.minecraftmapy.data.repository.UserRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
 
 class UserViewModel @ViewModelInject constructor(
-    val api: Api
+    private val userRepository: UserRepository,
+    private val mapRepository: MapRepository
 ) : BaseViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -31,37 +32,43 @@ class UserViewModel @ViewModelInject constructor(
     val maps: LiveData<List<Map>> = _maps
 
     private var currentMapsPage = 0
+    private lateinit var username: String
 
     fun init(username: String) {
         if (user.value == null) {
             _loading.value = true
             _mapsLoading.value = true
-            downloadUser(username)
+            this.username = username
+            downloadUser()
         }
     }
 
-    private fun downloadUser(username: String) {
-        val user = api.getUser(username)
-        _user.addSource(user) {
-            if (it is ApiResponse.ApiSuccessResponse) {
-                _user.value = it.body.data
+    private fun downloadUser() {
+        viewModelScope.launch {
+            val user = liveData(Dispatchers.IO) {
+                emit(userRepository.getUser(username))
+            }
+
+            _user.addSource(user) {
+                _user.value = it.data
                 _loading.value = false
                 downloadNextMapsPage()
             }
         }
-        user.refresh()
     }
 
     fun downloadNextMapsPage() {
-        val page = api.getUserMaps(user.value!!.info.username, page = ++currentMapsPage)
-        _maps.addSource(page) {
-            if (it is ApiResponse.ApiSuccessResponse) {
-                mapList.addAll(it.body.data)
+        viewModelScope.launch {
+            val page = liveData(Dispatchers.IO) {
+                emit(mapRepository.getUserMaps(username, page = ++currentMapsPage))
+            }
+
+            _maps.addSource(page) {
+                mapList.addAll(it.data)
                 _maps.value = mapList
                 _mapsLoading.value = false
             }
         }
-        page.refresh()
     }
 
     @Suppress("unused_parameter")
