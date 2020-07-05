@@ -11,7 +11,6 @@ import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
-import pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment
 import pl.kapiz.minecraftmapy.utils.LiveEvent
 import kotlin.random.Random
 
@@ -83,7 +82,7 @@ class MapsViewModel @ViewModelInject constructor(
         return when (item.itemId) {
             R.id.menu_maps_search -> true
             R.id.menu_maps_filter -> {
-                _dialog.value = FilterDialogFragment.newInstance()
+                _action.value = MapsFragmentDirections.actionNavigationMapsToFilterDialog()
                 true
             }
             else -> false

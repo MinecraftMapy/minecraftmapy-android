@@ -39,12 +39,6 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
                 findNavController().navigate(action)
             })
 
-            dialog.observeNonNull(viewLifecycleOwner, Observer { dialog ->
-                activity?.supportFragmentManager?.let {
-                    dialog.show(it, dialog::class.java.simpleName)
-                }
-            })
-
             toast.observeNonNull(viewLifecycleOwner, Observer { toast ->
                 Toast.makeText(context, toast, Toast.LENGTH_SHORT).show()
             })

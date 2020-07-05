@@ -12,6 +12,10 @@
         tools:layout="@layout/fragment_maps">
 
         <action
+            android:id="@+id/action_navigation_maps_to_filter_dialog"
+            app:destination="@id/filter_dialog" />
+
+        <action
             android:id="@+id/action_navigation_maps_to_map"
             app:destination="@id/map"
             app:enterAnim="@anim/slide_in_right"
@@ -31,6 +35,11 @@
         android:name="pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment"
         android:label="@string/title_more"
         tools:layout="@layout/fragment_more" />
+
+    <dialog
+        android:id="@+id/filter_dialog"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment"
+        tools:layout="@layout/dialog_filter" />
 
     <fragment
         android:id="@+id/map"
