@@ -3,6 +3,7 @@ package pl.kapiz.minecraftmapy.ui.modules.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -38,18 +39,17 @@ class MainActivity : AppCompatActivity() {
         b.navView.setupWithNavController(navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+    private fun getCurrentFragment(): Fragment? {
+        val navHostFragment = supportFragmentManager.primaryNavigationFragment
+        return navHostFragment?.childFragmentManager?.fragments?.get(0)
     }
 
     override fun onBackPressed() {
-        val navHostFragment = supportFragmentManager.primaryNavigationFragment
-        val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        val currentFragment = getCurrentFragment()
         if (currentFragment is OverridesOnBackPressed) {
             currentFragment.onBackPressed {
                 super.onBackPressed()
             }
         } else super.onBackPressed()
-
     }
 }

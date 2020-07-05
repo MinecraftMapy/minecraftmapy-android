@@ -54,7 +54,13 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
         })
 
         viewmodel.searchString.observe(viewLifecycleOwner, Observer {
-            b.mapList.scrollToPosition(0)
+            b.mapList.apply {
+                scrollToPosition(0)
+                clearOnScrollListeners()
+                setEndlessScrollListener(20) {
+                    viewmodel.downloadNextPage()
+                }
+            }
         })
 
         b.mapList.apply {
@@ -72,7 +78,9 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_maps, menu)
 
-        val searchView = (menu.findItem(R.id.menu_maps_search).actionView as? SearchView)
+        val searchItem = menu.findItem(R.id.menu_maps_search)
+        val searchView = searchItem?.actionView as? SearchView
+
         searchView?.apply {
             setSearchableInfo(searchManager?.getSearchableInfo(activity?.componentName))
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -81,6 +89,12 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
                     viewmodel.onQueryTextSubmit(query)
             })
         }
+
+        searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean =
+                viewmodel.onSearchCollapse()
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

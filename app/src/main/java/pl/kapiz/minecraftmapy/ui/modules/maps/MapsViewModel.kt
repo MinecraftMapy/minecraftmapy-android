@@ -85,11 +85,19 @@ class MapsViewModel @ViewModelInject constructor(
     }
 
     fun onQueryTextSubmit(query: String?): Boolean {
-        if (_searchString.value != query) {
+        if (searchString.value != query) {
             _searchString.value = query
             search()
             return true
         }
         return false
+    }
+
+    fun onSearchCollapse(): Boolean {
+        if (searchString.value != null) {
+            _searchString.value = null
+            search()
+        }
+        return true
     }
 }
