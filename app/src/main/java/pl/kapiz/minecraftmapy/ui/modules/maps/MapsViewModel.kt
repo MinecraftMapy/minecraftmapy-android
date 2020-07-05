@@ -3,9 +3,10 @@ package pl.kapiz.minecraftmapy.ui.modules.maps
 import android.view.MenuItem
 import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mikepenz.fastadapter.IAdapter
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
@@ -22,7 +23,7 @@ class MapsViewModel @ViewModelInject constructor(
     val loading: LiveData<Boolean> = _loading
 
     private val mapList = mutableListOf<Map>()
-    private val _maps = MediatorLiveData<List<Map>>()
+    private val _maps = MutableLiveData<List<Map>>()
     val maps: LiveData<List<Map>> = _maps
 
     private var currentPage = 0
@@ -48,22 +49,16 @@ class MapsViewModel @ViewModelInject constructor(
 
     fun downloadNextPage() {
         viewModelScope.launch {
-            val page = liveData(Dispatchers.IO) {
-                emit(
-                    mapRepository.getMaps(
-                        page = ++currentPage,
-                        query = searchString.value,
-                        sortBy = Map.SORT_BY_DISCOVER,
-                        seed = seed
-                    )
-                )
-            }
+            val page = mapRepository.getMaps(
+                page = ++currentPage,
+                query = searchString.value,
+                sortBy = Map.SORT_BY_DISCOVER,
+                seed = seed
+            )
 
-            _maps.addSource(page) {
-                mapList.addAll(it.data)
-                _maps.value = mapList
-                _loading.value = false
-            }
+            mapList.addAll(page.data)
+            _maps.value = mapList
+            _loading.value = false
         }
     }
 
