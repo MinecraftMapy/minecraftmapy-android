@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
@@ -49,7 +50,7 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
         }
 
         viewmodel.maps.observeNonNull(viewLifecycleOwner, Observer { maps ->
-            mapsAdapter.setNewList(maps)
+            FastAdapterDiffUtil[mapsAdapter] = mapsAdapter.intercept(maps)
         })
 
         viewmodel.searchString.observe(viewLifecycleOwner, Observer {

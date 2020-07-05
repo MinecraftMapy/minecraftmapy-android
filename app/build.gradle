@@ -70,6 +70,7 @@ dependencies {
     implementation "com.mikepenz:fastadapter:$fastadapter_version"
     implementation "com.mikepenz:fastadapter-extensions-binding:$fastadapter_version"
     implementation "com.mikepenz:fastadapter-extensions-scroll:$fastadapter_version"
+    implementation "com.mikepenz:fastadapter-extensions-diff:$fastadapter_version"
 
     implementation 'io.coil-kt:coil:0.11.0'
     implementation 'com.synnapps:carouselview:0.1.5'

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ModelAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.pojo.Map
@@ -45,7 +46,7 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
             })
 
             maps.observe(viewLifecycleOwner, Observer { maps ->
-                mapsAdapter.setNewList(maps)
+                FastAdapterDiffUtil[mapsAdapter] = mapsAdapter.intercept(maps)
             })
         }
 

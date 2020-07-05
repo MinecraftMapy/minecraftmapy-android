@@ -13,6 +13,10 @@ class MapItem(map: Map) : ModelAbstractBindingItem<Map, ItemMapBinding>(map) {
     override val type: Int
         get() = R.id.map_item
 
+    override var identifier: Long
+        get() = model.id
+        set(_) {}
+
     override fun createBinding(inflater: LayoutInflater, parent: ViewGroup?): ItemMapBinding {
         return ItemMapBinding.inflate(inflater, parent, false)
     }
