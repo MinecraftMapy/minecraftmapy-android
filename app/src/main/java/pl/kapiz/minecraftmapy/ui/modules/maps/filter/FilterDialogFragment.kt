@@ -17,7 +17,7 @@ class FilterDialogFragment : DialogFragment() {
         fun newInstance() = FilterDialogFragment()
     }
 
-    private val viewmodel: FilterDialogViewModel by viewModels()
+    private val viewModel: FilterDialogViewModel by viewModels()
     private lateinit var b: DialogFilterBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

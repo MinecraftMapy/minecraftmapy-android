@@ -4,10 +4,8 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="pl.kapiz.minecraftmapy.ui.modules.user.UserViewModel" />
     </data>
 
@@ -19,7 +17,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
+            android:isVisible="@{viewModel.loading}"
             tools:visibility="gone">
 
             <ProgressBar
@@ -31,7 +29,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewmodel.loading ? View.GONE : View.VISIBLE}"
+            android:isInvisible="@{viewModel.loading}"
             tools:visibility="visible">
 
             <LinearLayout
@@ -52,7 +50,8 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="16dp"
                         android:background="@color/black"
-                        android:scaleType="fitXY"
+                        android:imageUrl="@{viewModel.user.info.avatarUrl}"
+                        android:scaleType="centerCrop"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -61,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center_horizontal"
-                        android:text="@{viewmodel.user.info.username}"
+                        android:text="@{viewModel.user.info.username}"
                         android:textAlignment="center"
                         tools:text="kapi2289" />
 
@@ -70,8 +69,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autoLink="web|email"
-                        android:text="@{viewmodel.user.info.description}"
-                        android:visibility="@{(viewmodel.user.info.description != null) ? View.VISIBLE : View.GONE}"
+                        android:isVisible="@{viewModel.user.info.description != null}"
+                        android:text="@{viewModel.user.info.description}"
                         tools:text="Właściciel oraz programista strony." />
 
                     <TextView
@@ -79,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@{@string/format_maps(viewmodel.user.stats.mapCount)}"
+                        android:text="@{@string/format_maps(viewModel.user.stats.mapCount)}"
                         tools:text="Mapy (2)" />
                 </LinearLayout>
 
@@ -87,14 +86,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="@{viewmodel.mapsLoading ? View.VISIBLE : View.GONE}"
+                    android:isVisible="@{viewModel.mapsLoading}"
                     tools:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/user_map_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewmodel.mapsLoading ? View.GONE : View.VISIBLE}"
+                    android:isInvisible="@{viewModel.mapsLoading}"
                     tools:listitem="@layout/item_map"
                     tools:visibility="visible" />
             </LinearLayout>

@@ -9,5 +9,5 @@ import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    override val viewmodel: SearchViewModel by viewModels()
+    override val viewModel: SearchViewModel by viewModels()
 }

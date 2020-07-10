@@ -9,5 +9,5 @@ import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 @AndroidEntryPoint
 class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more) {
 
-    override val viewmodel: MoreViewModel by viewModels()
+    override val viewModel: MoreViewModel by viewModels()
 }

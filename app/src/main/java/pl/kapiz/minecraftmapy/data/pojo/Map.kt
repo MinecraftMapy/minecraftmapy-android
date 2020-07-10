@@ -1,5 +1,6 @@
 package pl.kapiz.minecraftmapy.data.pojo
 
+import pl.kapiz.minecraftmapy.utils.trimEnd
 import java.io.Serializable
 
 data class Map(
@@ -20,5 +21,8 @@ data class Map(
     data class Info(
         val title: String,
         val description: String
-    ) : Serializable
+    ) : Serializable {
+
+        val descriptionShort: String get() = description.replace("\n", " ").trimEnd(150)
+    }
 }

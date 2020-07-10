@@ -44,6 +44,10 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment?.childFragmentManager?.fragments?.get(0)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
+
     override fun onBackPressed() {
         val currentFragment = getCurrentFragment()
         if (currentFragment is OverridesOnBackPressed) {

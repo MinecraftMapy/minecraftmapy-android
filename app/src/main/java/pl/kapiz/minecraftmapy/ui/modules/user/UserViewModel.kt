@@ -1,18 +1,18 @@
 package pl.kapiz.minecraftmapy.ui.modules.user
 
-import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.mikepenz.fastadapter.IAdapter
+import androidx.paging.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import pl.kapiz.minecraftmapy.data.paging.MapPagingSource
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.pojo.User
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.data.repository.UserRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
-import pl.kapiz.minecraftmapy.ui.modules.maps.MapItem
 
 class UserViewModel @ViewModelInject constructor(
     private val userRepository: UserRepository,
@@ -25,23 +25,25 @@ class UserViewModel @ViewModelInject constructor(
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 
+    private lateinit var username: String
+
     private val _mapsLoading = MutableLiveData<Boolean>()
     val mapsLoading: LiveData<Boolean> = _mapsLoading
 
-    private val mapList = mutableListOf<Map>()
-    private val _maps = MutableLiveData<List<Map>>()
-    val maps: LiveData<List<Map>> = _maps
-
-    private var currentMapsPage = 0
-    private lateinit var username: String
+    private lateinit var mapPagingSource: MapPagingSource
+    lateinit var mapFlow: Flow<PagingData<Map>>
 
     fun init(username: String) {
         if (user.value == null) {
             _loading.value = true
-            _mapsLoading.value = true
             this.username = username
             downloadUser()
+            downloadUserMaps()
         }
+    }
+
+    fun onMapsLoadStateFlow(loadStates: CombinedLoadStates) {
+        _mapsLoading.value = loadStates.refresh is LoadState.Loading
     }
 
     private fun downloadUser() {
@@ -50,28 +52,19 @@ class UserViewModel @ViewModelInject constructor(
 
             _user.value = user.data
             _loading.value = false
-            downloadNextMapsPage()
         }
     }
 
-    fun downloadNextMapsPage() {
-        viewModelScope.launch {
-            val page = mapRepository.getUserMaps(username, page = ++currentMapsPage)
-
-            mapList.addAll(page.data)
-            _maps.value = mapList
-            _mapsLoading.value = false
+    private fun downloadUserMaps() {
+        if (!this::mapFlow.isInitialized) {
+            mapFlow = Pager(PagingConfig(pageSize = 20)) {
+                mapPagingSource = MapPagingSource(mapRepository, username = username)
+                return@Pager mapPagingSource
+            }.flow.cachedIn(viewModelScope)
         }
     }
 
-    @Suppress("unused_parameter")
-    fun onItemClicked(
-        view: View?,
-        adapter: IAdapter<MapItem>,
-        item: MapItem,
-        position: Int
-    ): Boolean {
-        _action.value = UserFragmentDirections.actionUserToMap(item.model)
-        return true
+    fun onMapItemClick(map: Map) {
+        _action.value = UserFragmentDirections.actionUserToMap(map)
     }
 }

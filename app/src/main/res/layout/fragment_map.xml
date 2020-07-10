@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="pl.kapiz.minecraftmapy.ui.modules.map.MapViewModel" />
     </data>
 
@@ -26,7 +26,7 @@
                 style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewmodel.map.info.title}"
+                android:text="@{viewModel.map.info.title}"
                 tools:text="Earth Collision" />
 
             <LinearLayout
@@ -50,8 +50,8 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{() -> viewmodel.onAuthorClicked()}"
-                    android:text="@{viewmodel.map.author.username}"
+                    android:onClick="@{() -> viewModel.onAuthorClicked()}"
+                    android:text="@{viewModel.map.author.username}"
                     tools:text="Kalendarz2" />
             </LinearLayout>
 
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:autoLink="web|email"
-                android:text="@{viewmodel.map.info.description}"
+                android:text="@{viewModel.map.info.description}"
                 tools:text="Jesteś kosmitą wysłanym na Ziemię. Twoim zadaniem było badanie zwierząt. Jednak podczas lądowania coś poszło nie tak...\n\nEarth collision to mapa przygodowa, w której musisz wydostać się z Ziemi i wrócić na swoją planetę.\nWykonuj poszczególne etapy, aby zdobyć części do budowy nowej rakiety.\nMapa przeznaczona jest dla od 1 do 6 graczy.\n\nUWAGA! Nie polecam pobierać tej mapy. Na dzisiejsze standardy jest ona strasznie słaba i gra w nią to tylko strata czasu. Zamiast tego, bardziej proponuję zagranie w tę mapę: https://minecraftmapy.pl/mapa/skZOwH, chociaż ona również zdążyła się już zestarzeć. " />
 
             <androidx.constraintlayout.widget.ConstraintLayout

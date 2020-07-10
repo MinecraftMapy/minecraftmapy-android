@@ -1,18 +1,16 @@
 package pl.kapiz.minecraftmapy.ui.modules.maps
 
 import android.view.MenuItem
-import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.mikepenz.fastadapter.IAdapter
-import kotlinx.coroutines.launch
+import androidx.paging.*
 import pl.kapiz.minecraftmapy.R
+import pl.kapiz.minecraftmapy.data.paging.MapPagingSource
 import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
-import pl.kapiz.minecraftmapy.utils.LiveEvent
 import kotlin.random.Random
 
 class MapsViewModel @ViewModelInject constructor(
@@ -22,55 +20,21 @@ class MapsViewModel @ViewModelInject constructor(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    private val mapList = mutableListOf<Map>()
-    private val _maps = MutableLiveData<List<Map>>()
-    val maps: LiveData<List<Map>> = _maps
+    private var seed: Int? = Random.nextInt(0, 99999)
+    private var searchString: String? = null
 
-    private var currentPage = 0
-    private var seed: Int? = null
+    private lateinit var mapPagingSource: MapPagingSource
+    val mapFlow = Pager(PagingConfig(pageSize = 20)) {
+        mapPagingSource = MapPagingSource(mapRepository, searchString, Map.SORT_BY_DISCOVER, seed)
+        return@Pager mapPagingSource
+    }.flow.cachedIn(viewModelScope)
 
-    private val _searchString = LiveEvent<String>()
-    val searchString: LiveData<String> = _searchString
-
-    override fun init() {
-        if (currentPage == 0) {
-            _loading.value = true
-            seed = Random.nextInt(0, 99999)
-            downloadNextPage()
-        }
+    fun onLoadStateFlow(loadStates: CombinedLoadStates) {
+        _loading.value = loadStates.refresh is LoadState.Loading
     }
 
-    private fun search() {
-        currentPage = 0
-        mapList.clear()
-        _loading.value = true
-        downloadNextPage()
-    }
-
-    fun downloadNextPage() {
-        viewModelScope.launch {
-            val page = mapRepository.getMaps(
-                page = ++currentPage,
-                query = searchString.value,
-                sortBy = Map.SORT_BY_DISCOVER,
-                seed = seed
-            )
-
-            mapList.addAll(page.data)
-            _maps.value = mapList
-            _loading.value = false
-        }
-    }
-
-    @Suppress("unused_parameter")
-    fun onItemClicked(
-        view: View?,
-        adapter: IAdapter<MapItem>,
-        item: MapItem,
-        position: Int
-    ): Boolean {
-        _action.value = MapsFragmentDirections.actionNavigationMapsToMap(item.model)
-        return true
+    fun onMapItemClick(map: Map) {
+        _action.value = MapsFragmentDirections.actionNavigationMapsToMap(map)
     }
 
     fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,19 +49,16 @@ class MapsViewModel @ViewModelInject constructor(
     }
 
     fun onQueryTextSubmit(query: String?): Boolean {
-        if (searchString.value != query) {
-            _searchString.value = query
-            search()
+        if (searchString != query) {
+            searchString = query
+            mapPagingSource.invalidate()
             return true
         }
         return false
     }
 
     fun onSearchCollapse(): Boolean {
-        if (searchString.value != null) {
-            _searchString.value = null
-            search()
-        }
+        onQueryTextSubmit(null)
         return true
     }
 }

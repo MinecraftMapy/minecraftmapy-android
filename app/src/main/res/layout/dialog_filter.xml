@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogViewModel" />
     </data>
 

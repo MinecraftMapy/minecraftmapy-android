@@ -9,30 +9,28 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.adapters.ModelAdapter
-import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
 import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 import pl.kapiz.minecraftmapy.ui.modules.main.MainActivity
-import pl.kapiz.minecraftmapy.utils.observeNonNull
-import pl.kapiz.minecraftmapy.utils.setEndlessScrollListener
+import pl.kapiz.minecraftmapy.utils.ItemLoadStateAdapter
 
 @AndroidEntryPoint
 class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
 
-    private lateinit var mapsAdapter: ModelAdapter<Map, MapItem>
+    private lateinit var mapAdapter: MapAdapter
 
     private val activity by lazy { getActivity() as? MainActivity }
     private val searchManager by lazy { activity?.getSystemService(Context.SEARCH_SERVICE) as? SearchManager }
 
-    override val viewmodel: MapsViewModel by viewModels()
+    override val viewModel: MapsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,36 +39,34 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        b.viewmodel = viewmodel
+        b.viewModel = viewModel
     }
 
+    @ExperimentalPagingApi
     override fun initView() {
-        mapsAdapter = ModelAdapter {
-            MapItem(it)
+        mapAdapter = MapAdapter(viewModel::onMapItemClick)
+
+        lifecycleScope.launch {
+            mapAdapter.loadStateFlow.collectLatest { loadStates ->
+                viewModel.onLoadStateFlow(loadStates)
+            }
         }
 
-        viewmodel.maps.observeNonNull(viewLifecycleOwner, Observer { maps ->
-            FastAdapterDiffUtil[mapsAdapter] = mapsAdapter.intercept(maps)
-        })
-
-        viewmodel.searchString.observe(viewLifecycleOwner, Observer {
-            b.mapList.apply {
-                scrollToPosition(0)
-                clearOnScrollListeners()
-                setEndlessScrollListener(20) {
-                    viewmodel.downloadNextPage()
-                }
+        lifecycleScope.launch {
+            mapAdapter.dataRefreshFlow.collectLatest {
+                b.mapList.scrollToPosition(0)
             }
-        })
+        }
+
+        lifecycleScope.launch {
+            viewModel.mapFlow.collectLatest { pagingData ->
+                mapAdapter.submitData(pagingData)
+            }
+        }
 
         b.mapList.apply {
             layoutManager = LinearLayoutManager(context)
-            setEndlessScrollListener(20) {
-                viewmodel.downloadNextPage()
-            }
-            adapter = FastAdapter.with(mapsAdapter).apply {
-                onClickListener = viewmodel::onItemClicked
-            }
+            adapter = mapAdapter.withLoadStateFooter(ItemLoadStateAdapter())
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
@@ -86,18 +82,18 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?) = false
                 override fun onQueryTextSubmit(query: String?) =
-                    viewmodel.onQueryTextSubmit(query)
+                    viewModel.onQueryTextSubmit(query)
             })
         }
 
         searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean =
-                viewmodel.onSearchCollapse()
+                viewModel.onSearchCollapse()
         })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return viewmodel.onOptionsItemSelected(item)
+        return viewModel.onOptionsItemSelected(item)
     }
 }

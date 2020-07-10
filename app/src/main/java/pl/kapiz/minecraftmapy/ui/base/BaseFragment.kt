@@ -15,7 +15,7 @@ import pl.kapiz.minecraftmapy.utils.observeNonNull
 
 abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) : Fragment() {
 
-    protected abstract val viewmodel: BaseViewModel
+    protected abstract val viewModel: BaseViewModel
 
     protected lateinit var b: B
 
@@ -32,7 +32,7 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewmodel.apply {
+        viewModel.apply {
             init()
 
             action.observeNonNull(viewLifecycleOwner, Observer { action ->

@@ -4,10 +4,8 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="pl.kapiz.minecraftmapy.ui.modules.maps.MapsViewModel" />
     </data>
 
@@ -19,7 +17,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}"
+            android:isVisible="@{viewModel.loading}"
             tools:visibility="gone">
 
             <ProgressBar
@@ -32,7 +30,7 @@
             android:id="@+id/map_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewmodel.loading ? View.GONE : View.VISIBLE}"
+            android:isInvisible="@{viewModel.loading}"
             tools:listitem="@layout/item_map"
             tools:visibility="visible" />
     </LinearLayout>

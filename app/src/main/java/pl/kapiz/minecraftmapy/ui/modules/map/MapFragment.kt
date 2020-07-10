@@ -17,16 +17,16 @@ import pl.kapiz.minecraftmapy.utils.setUnderlined
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map) {
 
-    override val viewmodel: MapViewModel by viewModels()
+    override val viewModel: MapViewModel by viewModels()
     private val args: MapFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        b.viewmodel = viewmodel
+        b.viewModel = viewModel
     }
 
     override fun initView() {
-        viewmodel.apply {
+        viewModel.apply {
             setMap(args.map)
 
             map.observeNonNull(viewLifecycleOwner, Observer { map ->
