@@ -65,6 +65,6 @@ class UserViewModel @ViewModelInject constructor(
     }
 
     fun onMapItemClick(map: Map) {
-        _action.value = UserFragmentDirections.actionUserToMap(map)
+        navigate(UserFragmentDirections.actionUserToMap(map))
     }
 }

@@ -34,14 +34,14 @@ class MapListViewModel @ViewModelInject constructor(
     }
 
     fun onMapItemClick(map: Map) {
-        _action.value = MapListFragmentDirections.actionNavigationMapsToMap(map)
+        navigate(MapListFragmentDirections.actionNavigationMapsToMap(map))
     }
 
     fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_maps_search -> true
             R.id.menu_maps_filter -> {
-                _action.value = MapListFragmentDirections.actionNavigationMapsToFilterDialog()
+                navigate(MapListFragmentDirections.actionNavigationMapsToFilterDialog())
                 true
             }
             else -> false

@@ -9,15 +9,17 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import pl.kapiz.minecraftmapy.ui.modules.main.MainViewModel
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 
 abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) : Fragment() {
 
-    protected abstract val viewModel: BaseViewModel
-
     protected lateinit var b: B
+    protected abstract val viewModel: BaseViewModel
+    protected val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +37,11 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
         viewModel.apply {
             init()
 
-            action.observeNonNull(viewLifecycleOwner, Observer { action ->
+            navCommand.observeNonNull(viewLifecycleOwner, Observer { action ->
                 findNavController().navigate(action)
             })
 
-            toast.observeNonNull(viewLifecycleOwner, Observer { toast ->
+            toastText.observeNonNull(viewLifecycleOwner, Observer { toast ->
                 Toast.makeText(context, toast, Toast.LENGTH_SHORT).show()
             })
         }

@@ -17,7 +17,7 @@ class MapViewModel @ViewModelInject constructor() : BaseViewModel() {
 
     fun onAuthorClicked() {
         map.value?.author?.username?.let {
-            _action.value = MapFragmentDirections.actionMapToUser(it)
+            navigate(MapFragmentDirections.actionMapToUser(it))
         }
     }
 }
