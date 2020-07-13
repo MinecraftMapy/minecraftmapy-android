@@ -1,7 +1,7 @@
 package pl.kapiz.minecraftmapy.data.paging
 
 import androidx.paging.PagingSource
-import pl.kapiz.minecraftmapy.data.pojo.Map
+import pl.kapiz.minecraftmapy.data.model.Map
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import retrofit2.HttpException
 import java.io.IOException

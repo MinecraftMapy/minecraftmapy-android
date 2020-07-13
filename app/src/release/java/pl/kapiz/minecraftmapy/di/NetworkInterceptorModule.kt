@@ -1,18 +1,18 @@
-package pl.kapiz.minecraftmapy.data.api
+package pl.kapiz.minecraftmapy.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-internal class ApiModule {
+internal class NetworkInterceptorModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit) =
-        retrofit.create(ApiService::class.java)
+    fun provideNetworkInterceptors(): NetworkInterceptors {
+        return NetworkInterceptors()
+    }
 }

@@ -1,4 +1,4 @@
-package pl.kapiz.minecraftmapy.data.pojo
+package pl.kapiz.minecraftmapy.data.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

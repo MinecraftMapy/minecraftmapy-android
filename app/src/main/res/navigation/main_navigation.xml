@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_maps"
-        android:name="pl.kapiz.minecraftmapy.ui.modules.maps.MapsFragment"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.maps.MapListFragment"
         android:label="@string/title_maps"
-        tools:layout="@layout/fragment_maps">
+        tools:layout="@layout/map_list_fragment">
 
         <action
             android:id="@+id/action_navigation_maps_to_filter_dialog"
@@ -28,28 +28,28 @@
         android:id="@+id/navigation_search"
         android:name="pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/search_fragment" />
 
     <fragment
         android:id="@+id/navigation_more"
         android:name="pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment"
         android:label="@string/title_more"
-        tools:layout="@layout/fragment_more" />
+        tools:layout="@layout/more_fragment" />
 
     <dialog
         android:id="@+id/filter_dialog"
         android:name="pl.kapiz.minecraftmapy.ui.modules.maps.filter.FilterDialogFragment"
-        tools:layout="@layout/dialog_filter" />
+        tools:layout="@layout/filter_dialog" />
 
     <fragment
         android:id="@+id/map"
         android:name="pl.kapiz.minecraftmapy.ui.modules.map.MapFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_map">
+        tools:layout="@layout/map_fragment">
 
         <argument
             android:name="map"
-            app:argType="pl.kapiz.minecraftmapy.data.pojo.Map"
+            app:argType="pl.kapiz.minecraftmapy.data.model.Map"
             app:nullable="false" />
 
         <action
@@ -65,7 +65,7 @@
         android:id="@+id/user"
         android:name="pl.kapiz.minecraftmapy.ui.modules.user.UserFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_user">
+        tools:layout="@layout/user_fragment">
 
         <argument
             android:name="username"

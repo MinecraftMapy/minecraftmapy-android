@@ -17,20 +17,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.databinding.FragmentMapsBinding
+import pl.kapiz.minecraftmapy.databinding.MapListFragmentBinding
 import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 import pl.kapiz.minecraftmapy.ui.modules.main.MainActivity
-import pl.kapiz.minecraftmapy.utils.ItemLoadStateAdapter
+import pl.kapiz.minecraftmapy.utils.LoadStateAdapter
 
 @AndroidEntryPoint
-class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
+class MapListFragment : BaseFragment<MapListFragmentBinding>(R.layout.map_list_fragment) {
 
-    private lateinit var mapAdapter: MapAdapter
+    private lateinit var mapListAdapter: MapListAdapter
 
     private val activity by lazy { getActivity() as? MainActivity }
     private val searchManager by lazy { activity?.getSystemService(Context.SEARCH_SERVICE) as? SearchManager }
 
-    override val viewModel: MapsViewModel by viewModels()
+    override val viewModel: MapListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,35 +44,35 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(R.layout.fragment_maps) {
 
     @ExperimentalPagingApi
     override fun initView() {
-        mapAdapter = MapAdapter(viewModel::onMapItemClick)
+        mapListAdapter = MapListAdapter(viewModel::onMapItemClick)
 
         lifecycleScope.launch {
-            mapAdapter.loadStateFlow.collectLatest { loadStates ->
+            mapListAdapter.loadStateFlow.collectLatest { loadStates ->
                 viewModel.onLoadStateFlow(loadStates)
             }
         }
 
         lifecycleScope.launch {
-            mapAdapter.dataRefreshFlow.collectLatest {
+            mapListAdapter.dataRefreshFlow.collectLatest {
                 b.mapList.scrollToPosition(0)
             }
         }
 
         lifecycleScope.launch {
             viewModel.mapFlow.collectLatest { pagingData ->
-                mapAdapter.submitData(pagingData)
+                mapListAdapter.submitData(pagingData)
             }
         }
 
         b.mapList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = mapAdapter.withLoadStateFooter(ItemLoadStateAdapter())
+            adapter = mapListAdapter.withLoadStateFooter(LoadStateAdapter())
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_maps, menu)
+        inflater.inflate(R.menu.map_list_menu, menu)
 
         val searchItem = menu.findItem(R.id.menu_maps_search)
         val searchView = searchItem?.actionView as? SearchView

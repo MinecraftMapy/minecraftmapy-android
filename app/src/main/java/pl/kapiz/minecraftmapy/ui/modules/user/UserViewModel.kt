@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import pl.kapiz.minecraftmapy.data.model.Map
+import pl.kapiz.minecraftmapy.data.model.User
 import pl.kapiz.minecraftmapy.data.paging.MapPagingSource
-import pl.kapiz.minecraftmapy.data.pojo.Map
-import pl.kapiz.minecraftmapy.data.pojo.User
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.data.repository.UserRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel

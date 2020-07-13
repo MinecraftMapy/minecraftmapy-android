@@ -4,23 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import pl.kapiz.minecraftmapy.data.pojo.Map
-import pl.kapiz.minecraftmapy.databinding.ItemMapBinding
+import pl.kapiz.minecraftmapy.data.model.Map
+import pl.kapiz.minecraftmapy.databinding.MapListItemBinding
 import pl.kapiz.minecraftmapy.utils.BindingViewHolder
 
-class MapAdapter(
+class MapListAdapter(
     private val onMapItemClick: (map: Map) -> Unit
-) : PagingDataAdapter<Map, BindingViewHolder<ItemMapBinding>>(MapComparator) {
+) : PagingDataAdapter<Map, BindingViewHolder<MapListItemBinding>>(MapComparator) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BindingViewHolder<ItemMapBinding> {
-        val binding = ItemMapBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    ): BindingViewHolder<MapListItemBinding> {
+        val binding = MapListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BindingViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BindingViewHolder<ItemMapBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<MapListItemBinding>, position: Int) {
         getItem(position)?.also { item ->
             with(holder.binding) {
                 map = item

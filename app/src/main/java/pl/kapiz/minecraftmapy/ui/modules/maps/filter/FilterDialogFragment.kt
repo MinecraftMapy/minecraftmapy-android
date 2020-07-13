@@ -7,7 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.databinding.DialogFilterBinding
+import pl.kapiz.minecraftmapy.databinding.FilterDialogBinding
 
 @AndroidEntryPoint
 class FilterDialogFragment : DialogFragment() {
@@ -18,11 +18,11 @@ class FilterDialogFragment : DialogFragment() {
     }
 
     private val viewModel: FilterDialogViewModel by viewModels()
-    private lateinit var b: DialogFilterBinding
+    private lateinit var b: FilterDialogBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            b = DialogFilterBinding.inflate(it.layoutInflater)
+            b = FilterDialogBinding.inflate(it.layoutInflater)
 
             AlertDialog.Builder(it)
                 .setTitle(R.string.menu_maps_filter)

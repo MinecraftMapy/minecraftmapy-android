@@ -1,4 +1,4 @@
-package pl.kapiz.minecraftmapy.data.pojo
+package pl.kapiz.minecraftmapy.data.model
 
 import pl.kapiz.minecraftmapy.utils.trimEnd
 import java.io.Serializable

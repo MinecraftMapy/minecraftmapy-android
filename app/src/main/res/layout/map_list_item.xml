@@ -7,7 +7,7 @@
 
         <variable
             name="map"
-            type="pl.kapiz.minecraftmapy.data.pojo.Map" />
+            type="pl.kapiz.minecraftmapy.data.model.Map" />
     </data>
 
     <LinearLayout

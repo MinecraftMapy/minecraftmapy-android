@@ -11,19 +11,19 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.databinding.ActivityMainBinding
+import pl.kapiz.minecraftmapy.databinding.MainActivityBinding
 import pl.kapiz.minecraftmapy.ui.base.OverridesOnBackPressed
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var b: ActivityMainBinding
+    private lateinit var b: MainActivityBinding
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        b = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        b = DataBindingUtil.setContentView(this, R.layout.main_activity)
         setSupportActionBar(b.navActionBar)
 
         navController = findNavController(R.id.nav_host_fragment)

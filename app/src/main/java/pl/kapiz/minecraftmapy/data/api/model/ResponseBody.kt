@@ -1,4 +1,4 @@
-package pl.kapiz.minecraftmapy.data.api
+package pl.kapiz.minecraftmapy.data.api.model
 
 import com.google.gson.annotations.SerializedName
 

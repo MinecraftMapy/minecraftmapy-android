@@ -4,21 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import pl.kapiz.minecraftmapy.databinding.ItemLoadStateBinding
+import pl.kapiz.minecraftmapy.databinding.LoadStateItemBinding
 
-class ItemLoadStateAdapter : LoadStateAdapter<BindingViewHolder<ItemLoadStateBinding>>() {
+class LoadStateAdapter : LoadStateAdapter<BindingViewHolder<LoadStateItemBinding>>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
-    ): BindingViewHolder<ItemLoadStateBinding> {
+    ): BindingViewHolder<LoadStateItemBinding> {
         val binding =
-            ItemLoadStateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            LoadStateItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BindingViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: BindingViewHolder<ItemLoadStateBinding>,
+        holder: BindingViewHolder<LoadStateItemBinding>,
         loadState: LoadState
     ) {
         holder.binding.loadState = loadState

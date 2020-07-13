@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="pl.kapiz.minecraftmapy.ui.modules.maps.MapsViewModel" />
+            type="pl.kapiz.minecraftmapy.ui.modules.maps.MapListViewModel" />
     </data>
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:isInvisible="@{viewModel.loading}"
-            tools:listitem="@layout/item_map"
+            tools:listitem="@layout/map_list_item"
             tools:visibility="visible" />
     </LinearLayout>
 </layout>

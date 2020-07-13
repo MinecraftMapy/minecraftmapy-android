@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:isInvisible="@{viewModel.mapsLoading}"
-                    tools:listitem="@layout/item_map"
+                    tools:listitem="@layout/map_list_item"
                     tools:visibility="visible" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -7,13 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import pl.kapiz.minecraftmapy.R
+import pl.kapiz.minecraftmapy.data.model.Map
 import pl.kapiz.minecraftmapy.data.paging.MapPagingSource
-import pl.kapiz.minecraftmapy.data.pojo.Map
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
 import kotlin.random.Random
 
-class MapsViewModel @ViewModelInject constructor(
+class MapListViewModel @ViewModelInject constructor(
     private val mapRepository: MapRepository
 ) : BaseViewModel() {
 
@@ -34,14 +34,14 @@ class MapsViewModel @ViewModelInject constructor(
     }
 
     fun onMapItemClick(map: Map) {
-        _action.value = MapsFragmentDirections.actionNavigationMapsToMap(map)
+        _action.value = MapListFragmentDirections.actionNavigationMapsToMap(map)
     }
 
     fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_maps_search -> true
             R.id.menu_maps_filter -> {
-                _action.value = MapsFragmentDirections.actionNavigationMapsToFilterDialog()
+                _action.value = MapListFragmentDirections.actionNavigationMapsToFilterDialog()
                 true
             }
             else -> false
