@@ -54,7 +54,7 @@
 
         <action
             android:id="@+id/action_map_to_user"
-            app:destination="@id/user"
+            app:destination="@id/userFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -62,18 +62,20 @@
     </fragment>
 
     <fragment
-        android:id="@+id/user"
+        android:id="@+id/userFragment"
         android:name="pl.kapiz.minecraftmapy.ui.modules.user.UserFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/user_fragment">
-
+        tools:layout="@layout/user_item">
+        <argument
+            android:name="user"
+            app:argType="pl.kapiz.minecraftmapy.data.model.User"
+            app:nullable="true" />
         <argument
             android:name="username"
             app:argType="string"
-            app:nullable="false" />
-
+            app:nullable="true" />
         <action
-            android:id="@+id/action_user_to_map"
+            android:id="@+id/action_to_mapFragment"
             app:destination="@id/map"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

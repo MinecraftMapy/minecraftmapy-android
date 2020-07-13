@@ -1,6 +1,8 @@
 package pl.kapiz.minecraftmapy.utils
 
+import android.content.res.Resources
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -25,3 +27,14 @@ fun TextView.setUnderlined(underlined: Boolean = true) {
         else -> paintFlags
     }
 }
+
+val Int.dp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+val Int.px: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+var TextView.drawableTop: Drawable?
+    get() = compoundDrawables.getOrNull(1)
+    set(value) {
+        setCompoundDrawables(null, value, null, null)
+    }

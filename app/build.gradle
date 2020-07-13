@@ -49,8 +49,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -71,4 +69,13 @@ dependencies {
     implementation 'com.synnapps:carouselview:0.1.5'
 
     implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha02"
+
+    implementation "com.mikepenz:iconics-core:$iconics_version"
+    implementation "com.mikepenz:iconics-views:$iconics_version"
+    implementation 'com.mikepenz:community-material-typeface:5.0.45.1-kotlin@aar'
+
+    implementation 'com.google.android:flexbox:2.0.1'
+
+    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
+    debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 }

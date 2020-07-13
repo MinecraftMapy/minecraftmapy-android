@@ -8,7 +8,13 @@
     <string name="map_author_by">By:</string>
     <string name="format_author">By: %s</string>
 
-    <string name="format_maps">Maps (%d)</string>
+    <string name="user_maps_format">Maps (%d)</string>
+    <string name="user_followers_format">%d followers</string>
+    <string name="user_type_active_format">%s • Active %s</string>
+    <string name="user_stars_total_hint">Diamonds received</string>
+    <string name="user_downloads_total_hint">Total map downloads</string>
+    <string name="user_map_count_hint">Uploaded map count</string>
+    <string name="user_comments_written_hint">Comments written</string>
 
     <string name="menu_maps_search">Search</string>
     <string name="menu_maps_filter">Filter</string>

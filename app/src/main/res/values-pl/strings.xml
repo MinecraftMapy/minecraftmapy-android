@@ -7,7 +7,13 @@
     <string name="map_author_by">Wykonał:</string>
     <string name="format_author">Wykonał: %s</string>
 
-    <string name="format_maps">Mapy (%d)</string>
+    <string name="user_maps_format">Mapy (%d)</string>
+    <string name="user_followers_format">%d obserwuje</string>
+    <string name="user_type_active_format">%s • Aktywny(a) %s</string>
+    <string name="user_stars_total_hint">Otrzymane diamenty</string>
+    <string name="user_downloads_total_hint">Suma pobrań map</string>
+    <string name="user_map_count_hint">Ilość wrzuconych map</string>
+    <string name="user_comments_written_hint">Ilość napisanych komentarzy</string>
 
     <string name="menu_maps_search">Szukaj</string>
     <string name="menu_maps_filter">Filtruj</string>
