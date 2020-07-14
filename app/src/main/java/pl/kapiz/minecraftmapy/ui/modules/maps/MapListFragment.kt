@@ -47,7 +47,7 @@ class MapListFragment : BaseFragment<MapListFragmentBinding>(R.layout.map_list_f
 
     @ExperimentalPagingApi
     override fun initView() {
-        mapListAdapter = MapListAdapter(viewModel::onMapItemClick)
+        mapListAdapter = MapListAdapter(viewModel::onMapClicked)
 
         viewModel.submitMapQuery(args.mapQuery ?: MapQuery.default())
 

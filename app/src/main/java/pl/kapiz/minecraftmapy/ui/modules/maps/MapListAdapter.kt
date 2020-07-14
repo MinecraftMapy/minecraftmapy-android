@@ -13,7 +13,7 @@ import pl.kapiz.minecraftmapy.databinding.MapListItemBinding
 import pl.kapiz.minecraftmapy.utils.BindingViewHolder
 
 class MapListAdapter(
-    private val onMapItemClick: (map: Map) -> Unit
+    private val onMapClicked: (map: Map) -> Unit
 ) : PagingDataAdapter<Map, BindingViewHolder<MapListItemBinding>>(MapComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<MapListItemBinding> {
@@ -26,9 +26,9 @@ class MapListAdapter(
 
     override fun onBindViewHolder(holder: BindingViewHolder<MapListItemBinding>, position: Int) {
         val b = holder.binding
-        getItem(position)?.also { item ->
+        getItem(position)?.let { item ->
             b.map = item
-            b.mapItem.setOnClickListener { onMapItemClick(item) }
+            b.mapItem.setOnClickListener { onMapClicked(item) }
         }
     }
 }

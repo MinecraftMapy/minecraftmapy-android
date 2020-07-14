@@ -41,7 +41,7 @@ class MapListViewModel @ViewModelInject constructor(
         this.mapPagingSource?.invalidate()
     }
 
-    fun onMapItemClick(map: Map) {
+    fun onMapClicked(map: Map) {
         navigate(MapListFragmentDirections.actionNavigationMapsToMap(
             map = map,
             mapCode = null

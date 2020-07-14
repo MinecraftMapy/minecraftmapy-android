@@ -13,7 +13,7 @@ import pl.kapiz.minecraftmapy.databinding.MapCommentListItemBinding
 import pl.kapiz.minecraftmapy.utils.BindingViewHolder
 
 class MapCommentListAdapter(
-    private val onItemClick: (item: Comment) -> Unit
+    private val onCommentClicked: (item: Comment) -> Unit
 ) : PagingDataAdapter<Comment, BindingViewHolder<MapCommentListItemBinding>>(MapCommentComparator) {
 
     var originalPosterUsername: String? = null
@@ -30,7 +30,7 @@ class MapCommentListAdapter(
         val b = holder.binding
         getItem(position)?.let { item ->
             b.comment = item
-            b.root.setOnClickListener { onItemClick(item) }
+            b.root.setOnClickListener { onCommentClicked(item) }
             b.isOP = item.author.username == originalPosterUsername
         }
     }

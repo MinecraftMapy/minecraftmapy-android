@@ -3,12 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_maps">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/navigation_maps"
+        android:id="@+id/homeFragment"
+        android:name="pl.kapiz.minecraftmapy.ui.modules.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_to_mapListFragment"
+            app:destination="@id/mapListFragment" />
+        <action
+            android:id="@+id/action_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapListFragment"
         android:name="pl.kapiz.minecraftmapy.ui.modules.maps.MapListFragment"
-        android:label="@string/title_maps"
+        android:label="@string/menu_browse"
         tools:layout="@layout/map_list_fragment">
         <argument
             android:name="mapQuery"
@@ -30,13 +43,13 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="pl.kapiz.minecraftmapy.ui.modules.search.SearchFragment"
-        android:label="@string/title_search"
+        android:label="@string/menu_search"
         tools:layout="@layout/search_fragment" />
 
     <fragment
         android:id="@+id/navigation_more"
         android:name="pl.kapiz.minecraftmapy.ui.modules.more.MoreFragment"
-        android:label="@string/title_more"
+        android:label="@string/menu_more"
         tools:layout="@layout/more_fragment" />
 
     <dialog
@@ -66,7 +79,7 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_to_mapListFragment"
-            app:destination="@id/navigation_maps"
+            app:destination="@id/mapListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

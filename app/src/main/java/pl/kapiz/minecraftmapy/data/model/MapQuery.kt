@@ -4,7 +4,10 @@
 
 package pl.kapiz.minecraftmapy.data.model
 
+import android.content.Context
+import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.model.enum.SortMode
+import pl.kapiz.minecraftmapy.utils.concat
 import java.io.Serializable
 import kotlin.random.Random
 
@@ -23,6 +26,10 @@ data class MapQuery(
             sortSeed = seed()
         )
 
+        fun withSortBy(sortBy: SortMode) = MapQuery(
+            sortBy = sortBy
+        )
+
         fun withText(queryText: String) = MapQuery(
             sortBy = SortMode.BEST_MATCH,
             queryText = queryText
@@ -39,5 +46,17 @@ data class MapQuery(
             sortSeed = seed(),
             version = version
         )
+    }
+
+    fun getTitle(context: Context): CharSequence {
+        return if (queryText != null) // Szukaj: nazwa mapy
+            context.getString(R.string.title_search_format, queryText)
+        else if (category != null || version != null) // Wersja 1.15.2, Adventure
+            listOf(
+                version?.let { context.getString(R.string.title_version_format, it.name) },
+                category?.name
+            ).concat(", ")
+        else
+            context.getString(sortBy?.title ?: R.string.app_name)
     }
 }

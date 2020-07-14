@@ -2,17 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_maps"
-        android:icon="@drawable/ic_maps_black_24dp"
-        android:title="@string/title_maps" />
+        android:id="@+id/homeFragment"
+        android:title="@string/menu_home" />
+
+    <item
+        android:id="@+id/mapListFragment"
+        android:title="@string/menu_browse" />
 
     <item
         android:id="@+id/navigation_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/title_search" />
+        android:title="@string/menu_search" />
 
     <item
         android:id="@+id/navigation_more"
         android:icon="@drawable/ic_more_black_24dp"
-        android:title="@string/title_more" />
+        android:title="@string/menu_more" />
 </menu>
