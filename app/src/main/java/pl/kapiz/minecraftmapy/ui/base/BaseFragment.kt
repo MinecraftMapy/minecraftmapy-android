@@ -11,7 +11,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.ui.modules.main.MainViewModel
 import pl.kapiz.minecraftmapy.utils.observeNonNull
 
@@ -20,6 +22,13 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
     protected lateinit var b: B
     protected abstract val viewModel: BaseViewModel
     protected val activityViewModel: MainViewModel by activityViewModels()
+
+    private val navOptions = NavOptions.Builder()
+        .setEnterAnim(R.anim.slide_in_right)
+        .setExitAnim(R.anim.slide_out_left)
+        .setPopEnterAnim(R.anim.slide_in_left)
+        .setPopExitAnim(R.anim.slide_out_right)
+        .build()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +47,7 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
             init()
 
             navCommand.observeNonNull(viewLifecycleOwner, Observer { action ->
-                findNavController().navigate(action)
+                findNavController().navigate(action, navOptions)
             })
 
             toastText.observeNonNull(viewLifecycleOwner, Observer { toast ->

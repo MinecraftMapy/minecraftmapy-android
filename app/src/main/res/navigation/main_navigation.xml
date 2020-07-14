@@ -33,11 +33,7 @@
             app:destination="@id/filter_dialog" />
         <action
             android:id="@+id/action_navigation_maps_to_map"
-            app:destination="@id/mapFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/mapFragment" />
     </fragment>
 
     <fragment
@@ -72,18 +68,10 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_to_userFragment"
-            app:destination="@id/userFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/userFragment" />
         <action
             android:id="@+id/action_to_mapListFragment"
-            app:destination="@id/mapListFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/mapListFragment" />
     </fragment>
 
     <fragment
@@ -101,10 +89,6 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_to_mapFragment"
-            app:destination="@id/mapFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>
