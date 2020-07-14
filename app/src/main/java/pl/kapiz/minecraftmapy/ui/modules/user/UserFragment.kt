@@ -37,6 +37,7 @@ class UserFragment : BaseFragment<UserFragmentBinding>(R.layout.user_fragment) {
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
             // update action bar title
+            setToolbarTitle(user.info.username)
 
             lifecycleScope.launch {
                 viewModel.maps.collectLatest { pagingData ->

@@ -20,13 +20,13 @@ class MapListViewModel @ViewModelInject constructor(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    private var mapQuery = MapQuery.default()
+    val mapQuery = MutableLiveData(MapQuery.default())
 
     private var mapPagingSource: MapPagingSource? = null
     val mapFlow = Pager(
         PagingConfig(pageSize = 20, initialLoadSize = 20, prefetchDistance = 10)
     ) {
-        mapPagingSource = MapPagingSource(mapRepository, mapQuery)
+        mapPagingSource = MapPagingSource(mapRepository, mapQuery.value)
         return@Pager mapPagingSource!!
     }.flow.cachedIn(viewModelScope)
 
@@ -35,9 +35,9 @@ class MapListViewModel @ViewModelInject constructor(
     }
 
     fun submitMapQuery(mapQuery: MapQuery) {
-        if (this.mapQuery == mapQuery)
+        if (this.mapQuery.value == mapQuery)
             return
-        this.mapQuery = mapQuery
+        this.mapQuery.value = mapQuery
         this.mapPagingSource?.invalidate()
     }
 
@@ -60,8 +60,8 @@ class MapListViewModel @ViewModelInject constructor(
     }
 
     fun onQueryTextSubmit(queryText: String?): Boolean {
-        if (mapQuery.queryText != queryText) {
-            mapQuery = if (queryText == null)
+        if (mapQuery.value?.queryText != queryText) {
+            val mapQuery = if (queryText == null)
                 MapQuery.default()
             else
                 MapQuery.withText(queryText)

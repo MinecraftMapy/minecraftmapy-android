@@ -49,5 +49,9 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes val layoutId: Int) :
         initView()
     }
 
+    protected fun setToolbarTitle(title: CharSequence) {
+        activityViewModel.toolbarTitle.postValue(title)
+    }
+
     protected open fun initView() {}
 }

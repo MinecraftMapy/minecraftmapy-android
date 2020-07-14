@@ -186,13 +186,14 @@
                 tools:text="1245" />
         </com.google.android.flexbox.FlexboxLayout>
 
-        <TextView
+        <com.mikepenz.iconics.view.IconicsTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="4dp"
-            android:text="@{viewModel.map.info.createdAt}"
+            android:maxLength="12"
+            android:text="@{@string/map_date_icon_format(viewModel.map.info.createdAt)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             tools:text="Dodano 3 miesiące temu" />
 
@@ -217,7 +218,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp">
+            android:layout_marginVertical="8dp"
+            android:isVisible="@{viewModel.mapFetched}">
 
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/map_carousel"

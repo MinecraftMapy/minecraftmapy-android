@@ -10,6 +10,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -48,6 +49,10 @@ class MapListFragment : BaseFragment<MapListFragmentBinding>(R.layout.map_list_f
     @ExperimentalPagingApi
     override fun initView() {
         mapListAdapter = MapListAdapter(viewModel::onMapClicked)
+
+        viewModel.mapQuery.observe(viewLifecycleOwner) {
+            setToolbarTitle(it.getTitle(b.root.context))
+        }
 
         viewModel.submitMapQuery(args.mapQuery ?: MapQuery.default())
 

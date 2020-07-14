@@ -39,6 +39,7 @@ class MapFragment : BaseFragment<MapFragmentBinding>(R.layout.map_fragment) {
 
         viewModel.map.observe(viewLifecycleOwner) { map ->
             // update action bar title
+            setToolbarTitle(map.info.title)
             commentListAdapter.originalPosterUsername = map.author.username
 
             lifecycleScope.launch {
