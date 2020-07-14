@@ -2,14 +2,20 @@
     <!-- Application theme for dark theme. -->
     <style name="Theme.MinecraftMapy" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/amber_400</item>
-        <item name="colorPrimaryDark">@color/amber_700</item>
+        <item name="colorPrimary">@color/primary_light</item>
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorPrimaryVariant">?colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_grey_400</item>
-        <item name="colorSecondaryVariant">@color/blue_grey_400</item>
+        <item name="colorSecondary">@color/accent_light</item>
+        <item name="colorSecondaryVariant">@color/accent_light</item>
         <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Text colors. -->
+        <item name="android:textColorPrimary">@color/dark_bg_light_primary_text</item>
+        <item name="android:textColorSecondary">@color/dark_bg_light_secondary_text</item>
+        <item name="android:textColorHint">@color/dark_bg_light_hint_text</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
