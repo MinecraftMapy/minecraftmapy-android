@@ -5,8 +5,12 @@
     <string name="title_search">Search</string>
     <string name="title_more">More</string>
 
-    <string name="map_author_by">By:</string>
+    <string name="follow">Follow</string>
+    <string name="follow_checked">Following</string>
+
     <string name="format_author">By: %s</string>
+    <string name="map_comments_format">Comments (%d)</string>
+    <string name="map_comment_original_poster">{cmd-account-circle-outline} Map author</string>
 
     <string name="user_maps_format">Maps (%d)</string>
     <string name="user_followers_format">%d followers</string>

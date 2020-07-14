@@ -22,6 +22,7 @@ class UserViewModel @ViewModelInject constructor(
     val userFetched = MutableLiveData<Boolean>()
 
     private val username get() = user.value?.info?.username
+
     private var mapsPagingSource: MapPagingSource? = null
     val maps = Pager(
         PagingConfig(pageSize = 20, initialLoadSize = 20, prefetchDistance = 10)
@@ -30,11 +31,12 @@ class UserViewModel @ViewModelInject constructor(
         return@Pager mapsPagingSource!!
     }.flow.cachedIn(viewModelScope)
 
-    suspend fun fetchUser(username: String) {
+    suspend fun loadUser(username: String) {
         if (this.username == username)
             return
-        val user = userRepository.getUser(username)
-        loadUser(user.data)
+        fetchUser(username)?.let {
+            loadUser(it)
+        }
     }
 
     fun loadUser(user: User) {
@@ -45,7 +47,17 @@ class UserViewModel @ViewModelInject constructor(
         mapsPagingSource?.invalidate()
     }
 
+    private suspend fun fetchUser(username: String): User? {
+        if (this.username == username)
+            return null
+        val user = userRepository.getUser(username)
+        return user.data
+    }
+
     fun onMapClicked(map: Map) {
-        navigate(UserFragmentDirections.actionToMapFragment(map))
+        navigate(UserFragmentDirections.actionToMapFragment(
+            map = map,
+            mapCode = null
+        ))
     }
 }

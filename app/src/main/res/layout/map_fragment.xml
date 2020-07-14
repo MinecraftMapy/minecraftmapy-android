@@ -1,91 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<!--
+  ~ Copyright (c) Kuba Szczodrzyński 2020-7-14.
+  -->
 
-    <data>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <variable
-            name="viewModel"
-            type="pl.kapiz.minecraftmapy.ui.modules.map.MapViewModel" />
-    </data>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/map_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/map_title"
-                style="@style/TextAppearance.AppCompat.Large"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.map.info.title}"
-                tools:text="Earth Collision" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginRight="4dp"
-                    android:text="@string/map_author_by" />
-
-                <TextView
-                    android:id="@+id/map_author"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="@{() -> viewModel.onAuthorClicked()}"
-                    android:text="@{viewModel.map.author.username}"
-                    tools:text="Kalendarz2" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/map_description"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:autoLink="web|email"
-                android:text="@{viewModel.map.info.description}"
-                tools:text="Jesteś kosmitą wysłanym na Ziemię. Twoim zadaniem było badanie zwierząt. Jednak podczas lądowania coś poszło nie tak...\n\nEarth collision to mapa przygodowa, w której musisz wydostać się z Ziemi i wrócić na swoją planetę.\nWykonuj poszczególne etapy, aby zdobyć części do budowy nowej rakiety.\nMapa przeznaczona jest dla od 1 do 6 graczy.\n\nUWAGA! Nie polecam pobierać tej mapy. Na dzisiejsze standardy jest ona strasznie słaba i gra w nią to tylko strata czasu. Zamiast tego, bardziej proponuję zagranie w tę mapę: https://minecraftmapy.pl/mapa/skZOwH, chociaż ona również zdążyła się już zestarzeć. " />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.synnapps.carouselview.CarouselView
-                    android:id="@+id/map_carousel"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@color/black"
-                    app:fillColor="?attr/colorPrimary"
-                    app:layout_constraintDimensionRatio="H,16:9"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:pageColor="#44000000"
-                    app:radius="6dp"
-                    app:slideInterval="3000"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="1dp" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="match_parent" />
 </layout>

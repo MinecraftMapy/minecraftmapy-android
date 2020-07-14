@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="comment"
+            type="pl.kapiz.minecraftmapy.data.model.Comment" />
+        <variable
+            name="isOP"
+            type="Boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{comment.author.username}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                tools:text="Użytkownik" />
+            <!-- android:textColor="@{isOP ? android.R.attr.colorSecondary : android.R.attr.textColorPrimary}" -->
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:isVisible="@{isOP}"
+                android:text="@string/map_comment_original_poster"
+                android:textColor="@color/indigo_A400"
+                android:fontFamily="sans-serif-medium"
+                tools:text="() Autor mapy" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@{comment.info.createdAt}"
+                tools:text="3 miesiące temu" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:text="@{comment.info.content}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            tools:text="To jest treść komentarza.\n\nMoże mieć kilka linijek, lub w jakiś inny sposób być po prostu długa." />
+    </LinearLayout>
+</layout>

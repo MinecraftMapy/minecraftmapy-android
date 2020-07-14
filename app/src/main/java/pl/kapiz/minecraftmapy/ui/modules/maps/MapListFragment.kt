@@ -10,6 +10,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.R
+import pl.kapiz.minecraftmapy.data.model.MapQuery
 import pl.kapiz.minecraftmapy.databinding.MapListFragmentBinding
 import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 import pl.kapiz.minecraftmapy.ui.modules.main.MainActivity
@@ -31,6 +33,7 @@ class MapListFragment : BaseFragment<MapListFragmentBinding>(R.layout.map_list_f
     private val searchManager by lazy { activity?.getSystemService(Context.SEARCH_SERVICE) as? SearchManager }
 
     override val viewModel: MapListViewModel by viewModels()
+    private val args: MapListFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,8 @@ class MapListFragment : BaseFragment<MapListFragmentBinding>(R.layout.map_list_f
     @ExperimentalPagingApi
     override fun initView() {
         mapListAdapter = MapListAdapter(viewModel::onMapItemClick)
+
+        viewModel.submitMapQuery(args.mapQuery ?: MapQuery.default())
 
         lifecycleScope.launch {
             mapListAdapter.loadStateFlow.collectLatest { loadStates ->

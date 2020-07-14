@@ -9,11 +9,9 @@ import androidx.paging.*
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.model.Map
 import pl.kapiz.minecraftmapy.data.model.MapQuery
-import pl.kapiz.minecraftmapy.data.model.enum.SortMode
 import pl.kapiz.minecraftmapy.data.paging.MapPagingSource
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
-import kotlin.random.Random
 
 class MapListViewModel @ViewModelInject constructor(
     private val mapRepository: MapRepository
@@ -22,24 +20,32 @@ class MapListViewModel @ViewModelInject constructor(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    private var seed: Int? = Random.nextInt(0, 99999)
-    private var searchString: String? = null
+    private var mapQuery = MapQuery.default()
 
-    private lateinit var mapPagingSource: MapPagingSource
-    val mapFlow = Pager(PagingConfig(pageSize = 20)) {
-        mapPagingSource = MapPagingSource(
-            mapRepository,
-            MapQuery(SortMode.DISCOVER, seed, queryText = searchString)
-        )
-        return@Pager mapPagingSource
+    private var mapPagingSource: MapPagingSource? = null
+    val mapFlow = Pager(
+        PagingConfig(pageSize = 20, initialLoadSize = 20, prefetchDistance = 10)
+    ) {
+        mapPagingSource = MapPagingSource(mapRepository, mapQuery)
+        return@Pager mapPagingSource!!
     }.flow.cachedIn(viewModelScope)
 
     fun onLoadStateFlow(loadStates: CombinedLoadStates) {
         _loading.value = loadStates.refresh is LoadState.Loading
     }
 
+    fun submitMapQuery(mapQuery: MapQuery) {
+        if (this.mapQuery == mapQuery)
+            return
+        this.mapQuery = mapQuery
+        this.mapPagingSource?.invalidate()
+    }
+
     fun onMapItemClick(map: Map) {
-        navigate(MapListFragmentDirections.actionNavigationMapsToMap(map))
+        navigate(MapListFragmentDirections.actionNavigationMapsToMap(
+            map = map,
+            mapCode = null
+        ))
     }
 
     fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -53,10 +59,13 @@ class MapListViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onQueryTextSubmit(query: String?): Boolean {
-        if (searchString != query) {
-            searchString = query
-            mapPagingSource.invalidate()
+    fun onQueryTextSubmit(queryText: String?): Boolean {
+        if (mapQuery.queryText != queryText) {
+            mapQuery = if (queryText == null)
+                MapQuery.default()
+            else
+                MapQuery.withText(queryText)
+            submitMapQuery(mapQuery)
             return true
         }
         return false

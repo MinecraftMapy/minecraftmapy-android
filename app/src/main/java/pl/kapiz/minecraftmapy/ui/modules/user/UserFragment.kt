@@ -35,11 +35,9 @@ class UserFragment : BaseFragment<UserFragmentBinding>(R.layout.user_fragment) {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
-        viewModel.user.observe(viewLifecycleOwner) {
+        viewModel.user.observe(viewLifecycleOwner) { user ->
+            // update action bar title
 
-        }
-
-        viewModel.userFetched.observe(viewLifecycleOwner) {
             lifecycleScope.launch {
                 viewModel.maps.collectLatest { pagingData ->
                     mapListAdapter.submitData(pagingData)
@@ -51,7 +49,7 @@ class UserFragment : BaseFragment<UserFragmentBinding>(R.layout.user_fragment) {
             if (args.user != null)
                 viewModel.loadUser(args.user!!)
             else if (args.username != null)
-                viewModel.fetchUser(args.username!!)
+                viewModel.loadUser(args.username!!)
             //else
             //    throw Exception("No user or username supplied.")
         }
