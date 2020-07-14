@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Kuba Szczodrzyński 2020-7-13.
+ */
+
 package pl.kapiz.minecraftmapy.di
 
 import dagger.Module
