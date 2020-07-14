@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.databinding.MapFragmentBinding
 import pl.kapiz.minecraftmapy.ui.base.BaseFragment
-import pl.kapiz.minecraftmapy.ui.modules.map.comment.MapCommentComparator
 import pl.kapiz.minecraftmapy.ui.modules.map.comment.MapCommentListAdapter
 import pl.kapiz.minecraftmapy.utils.LoadStateAdapter
 
@@ -25,7 +24,7 @@ class MapFragment : BaseFragment<MapFragmentBinding>(R.layout.map_fragment) {
 
     override fun initView() {
         val mapAdapter = MapAdapter(viewModel, viewLifecycleOwner)
-        val commentListAdapter = MapCommentListAdapter(MapCommentComparator) {
+        val commentListAdapter = MapCommentListAdapter() {
             viewModel.onCommentClicked(it)
         }
 
