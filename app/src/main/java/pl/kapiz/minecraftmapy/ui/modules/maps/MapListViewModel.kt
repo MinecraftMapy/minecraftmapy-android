@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import pl.kapiz.minecraftmapy.R
 import pl.kapiz.minecraftmapy.data.model.Map
+import pl.kapiz.minecraftmapy.data.model.MapQuery
+import pl.kapiz.minecraftmapy.data.model.enum.SortMode
 import pl.kapiz.minecraftmapy.data.paging.MapPagingSource
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
@@ -25,7 +27,10 @@ class MapListViewModel @ViewModelInject constructor(
 
     private lateinit var mapPagingSource: MapPagingSource
     val mapFlow = Pager(PagingConfig(pageSize = 20)) {
-        mapPagingSource = MapPagingSource(mapRepository, searchString, Map.SORT_BY_DISCOVER, seed)
+        mapPagingSource = MapPagingSource(
+            mapRepository,
+            MapQuery(SortMode.DISCOVER, seed, queryText = searchString)
+        )
         return@Pager mapPagingSource
     }.flow.cachedIn(viewModelScope)
 

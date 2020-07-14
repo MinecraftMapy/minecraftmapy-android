@@ -27,7 +27,7 @@ class UserViewModel @ViewModelInject constructor(
         PagingConfig(pageSize = 20, initialLoadSize = 20, prefetchDistance = 10)
     ) {
         mapsPagingSource = MapPagingSource(mapRepository, username = username)
-        mapsPagingSource!!
+        return@Pager mapsPagingSource!!
     }.flow.cachedIn(viewModelScope)
 
     suspend fun fetchUser(username: String) {
