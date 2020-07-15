@@ -2,13 +2,13 @@
  * Copyright (c) Kuba Szczodrzyński 2020-7-15.
  */
 
-package pl.kapiz.minecraftmapy.ui.modules.home.row
+package pl.kapiz.minecraftmapy.ui.modules.maps
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import pl.kapiz.minecraftmapy.databinding.HomeRowItemBinding
+import pl.kapiz.minecraftmapy.databinding.MapRowItemBinding
 import pl.kapiz.minecraftmapy.utils.BindingViewHolder
 
 /*
@@ -16,9 +16,9 @@ import pl.kapiz.minecraftmapy.utils.BindingViewHolder
  * some genius at Google thought that displaying multiple load state/placeholder
  * items is not an idea.
  */
-class HomeRowLoadStateAdapter(
+class MapRowLoadStateAdapter(
     private val itemCount: Int
-) : RecyclerView.Adapter<BindingViewHolder<HomeRowItemBinding>>() {
+) : RecyclerView.Adapter<BindingViewHolder<MapRowItemBinding>>() {
 
     var loadState: LoadState = LoadState.NotLoading(endOfPaginationReached = false)
         set(loadState) {
@@ -40,8 +40,8 @@ class HomeRowLoadStateAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         position: Int
-    ): BindingViewHolder<HomeRowItemBinding> {
-        return BindingViewHolder(HomeRowItemBinding.inflate(
+    ): BindingViewHolder<MapRowItemBinding> {
+        return BindingViewHolder(MapRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -49,7 +49,7 @@ class HomeRowLoadStateAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: BindingViewHolder<HomeRowItemBinding>,
+        holder: BindingViewHolder<MapRowItemBinding>,
         position: Int
     ) {
         val b = holder.binding

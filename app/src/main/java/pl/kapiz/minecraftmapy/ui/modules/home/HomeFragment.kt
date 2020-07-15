@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import pl.kapiz.minecraftmapy.R
-import pl.kapiz.minecraftmapy.data.model.MapQuery
-import pl.kapiz.minecraftmapy.data.model.enum.SortMode
 import pl.kapiz.minecraftmapy.databinding.HomeFragmentBinding
 import pl.kapiz.minecraftmapy.ui.base.BaseFragment
 
@@ -22,15 +20,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(R.layout.home_fragment) {
 
     override fun initView() {
         val homeAdapter = HomeAdapter(
-            lifecycleScope,
-            viewModel.mapRepository,
-            listOf(
-                MapQuery.default(),
-                MapQuery.withSortBy(SortMode.NEWEST),
-                MapQuery.withSortBy(SortMode.MOST_DOWNLOADED)
-            ),
-            onMoreButtonClicked = viewModel::onMoreButtonClicked,
-            onMapClicked = viewModel::onMapClicked
+            viewModel,
+            lifecycleScope
         )
 
         b.list.apply {

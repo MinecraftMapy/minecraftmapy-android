@@ -9,8 +9,8 @@
 
     <data>
         <variable
-            name="mapQuery"
-            type="pl.kapiz.minecraftmapy.data.model.MapQuery" />
+            name="viewModel"
+            type="pl.kapiz.minecraftmapy.ui.modules.maps.MapRowViewModel" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{mapQuery.getTitle(context)}"
+                android:text="@{viewModel.mapQuery.getTitle(context)}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 tools:text="Warto zobaczyć" />
 
@@ -47,6 +47,6 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="20"
-            tools:listitem="@layout/home_row_item" />
+            tools:listitem="@layout/map_row_item" />
     </LinearLayout>
 </layout>
