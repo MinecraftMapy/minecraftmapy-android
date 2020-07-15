@@ -184,6 +184,7 @@
             android:layout_gravity="end"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="4dp"
+            android:isVisible="@{viewModel.mapFetched}"
             android:maxLength="12"
             android:text="@{@string/map_date_icon_format(viewModel.map.info.createdAt)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
