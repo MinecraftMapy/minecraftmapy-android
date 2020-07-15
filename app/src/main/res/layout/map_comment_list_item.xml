@@ -39,7 +39,7 @@
                 android:layout_marginHorizontal="4dp"
                 android:isVisible="@{isOP}"
                 android:text="@string/map_comment_original_poster"
-                android:textColor="@color/indigo_A400"
+                android:textColor="?colorAccent"
                 android:fontFamily="sans-serif-medium"
                 tools:text="() Autor mapy" />
 

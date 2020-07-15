@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setTheme(R.style.Theme_MinecraftMapy)
         b = DataBindingUtil.setContentView(this, R.layout.main_activity)
         setSupportActionBar(b.navActionBar)
 

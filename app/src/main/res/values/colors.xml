@@ -5,7 +5,7 @@
     <color name="primary">@color/amber_700</color>
     <color name="primary_dark">@color/amber_900</color>
 
-    <color name="accent_light">@color/blue_grey_400</color>
-    <color name="accent">@color/blue_grey_800</color>
-    <color name="accent_dark">@color/blue_grey_900</color>
+    <color name="accent_light">@color/indigo_A100</color>
+    <color name="accent">@color/indigo_A400</color>
+    <color name="accent_dark">@color/indigo_600</color>
 </resources>

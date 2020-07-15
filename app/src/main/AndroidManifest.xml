@@ -17,7 +17,8 @@
 
         <activity
             android:name="pl.kapiz.minecraftmapy.ui.modules.main.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MinecraftMapy.Splash">
 
             <nav-graph android:value="@navigation/main_navigation" />
 
