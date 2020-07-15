@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_to_mapListFragment"
             app:destination="@id/mapListFragment" />
+        <action
+            android:id="@+id/action_to_mapFragment"
+            app:destination="@id/mapFragment" />
         <deepLink
             android:id="@+id/mapFragmentDeepLink"
             android:autoVerify="true"

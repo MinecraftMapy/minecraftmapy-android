@@ -26,6 +26,7 @@
     <string name="map_date_icon_format" translatable="false">{cmd-calendar-outline} %s</string>
     <string name="map_list_item_details_format" translatable="false">{cmd-shape-outline} %s • {cmd-download-outline} %d • {cmd-star-outline} %d</string>
     <string name="map_row_item_details_format" translatable="false">{cmd-shape-outline} %s • {cmd-download-outline} %d</string>
+    <string name="map_category_similar_format">Check other %s maps</string>
     <string name="map_comments_format">Comments (%d)</string>
     <string name="map_comment_original_poster">{cmd-account-circle-outline} Map author</string>
 

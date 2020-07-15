@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="menu_home">Strona główna</string>
+    <string name="menu_browse">Przeglądaj</string>
+    <string name="menu_notifications">Powiadomienia</string>
+    <string name="menu_account">Konto</string>
     <string name="menu_maps">Mapy</string>
     <string name="menu_search">Szukaj</string>
     <string name="menu_more">Więcej</string>
+
+    <string name="title_search_format">Szukaj: %s</string>
+    <string name="title_version_format">Wersja %s</string>
+    <string name="sort_mode_best_match">Trafność</string>
+    <string name="sort_mode_newest">Najnowsze</string>
+    <string name="sort_mode_discover">Warto zobaczyć</string>
+    <string name="sort_mode_best_rated">Najwięcej diamentów</string>
+    <string name="sort_mode_most_downloaded">Najwięcej pobrań</string>
+    <string name="sort_mode_oldest">Najstarsze</string>
 
     <string name="follow">Obserwuj</string>
     <string name="follow_checked">Obserwujesz</string>
 
     <string name="format_author">Wykonał: %s</string>
+    <string name="map_category_similar_format">Zobacz inne mapy %s</string>
     <string name="map_comments_format">Komentarze (%d)</string>
     <string name="map_comment_original_poster">{cmd-account-circle-outline} Autor mapy</string>
 
@@ -21,17 +35,5 @@
 
     <string name="menu_maps_search">Szukaj</string>
     <string name="menu_maps_filter">Filtruj</string>
-    <string name="title_search_format">Szukaj: %s</string>
-    <string name="title_version_format">Wersja %s</string>
-    <string name="sort_mode_best_match">Trafność</string>
-    <string name="sort_mode_newest">Najnowsze</string>
-    <string name="sort_mode_discover">Warto zobaczyć</string>
-    <string name="sort_mode_best_rated">Najwięcej diamentów</string>
-    <string name="sort_mode_most_downloaded">Najwięcej pobrań</string>
-    <string name="sort_mode_oldest">Najstarsze</string>
-    <string name="menu_home">Strona główna</string>
-    <string name="menu_browse">Przeglądaj</string>
-    <string name="menu_notifications">Powiadomienia</string>
-    <string name="menu_account">Konto</string>
     <string name="more">Więcej</string>
 </resources>

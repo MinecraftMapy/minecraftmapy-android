@@ -231,6 +231,41 @@
                 app:strokeWidth="1dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isVisible="@{viewModel.mapFetched}"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{@string/map_category_similar_format(viewModel.map.info.category.name)}"
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                tools:text="Zobacz inne mapy Adventure" />
+
+            <Button
+                android:id="@+id/similarMoreButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:text="@string/more" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/similarMaps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isVisible="@{viewModel.mapFetched}"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="20"
+            tools:listitem="@layout/map_row_item" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -11,9 +11,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.observe
+import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import pl.kapiz.minecraftmapy.databinding.MapItemBinding
+import pl.kapiz.minecraftmapy.ui.modules.maps.MapRowAdapter
+import pl.kapiz.minecraftmapy.ui.modules.maps.MapRowLoadStateAdapter
 import pl.kapiz.minecraftmapy.utils.BindingViewHolder
 
 class MapAdapter(
@@ -37,6 +43,18 @@ class MapAdapter(
         b.viewModel = viewModel
         b.lifecycleOwner = viewLifecycleOwner
 
+        val mapRowAdapter = MapRowAdapter(viewModel::onMapClicked)
+        val mapRowLoadStateAdapter = MapRowLoadStateAdapter(4)
+
+        b.similarMaps.adapter = ConcatAdapter(
+            mapRowLoadStateAdapter,
+            mapRowAdapter.apply {
+                addLoadStateListener { loadStates ->
+                    mapRowLoadStateAdapter.loadState = loadStates.refresh
+                }
+            }
+        )
+
         viewModel.map.observe(viewLifecycleOwner) { map ->
             b.downloadCount.setOnClickListener {
                 val i = Intent(Intent.ACTION_VIEW)
@@ -50,6 +68,13 @@ class MapAdapter(
                     imageView.load(map.images[position])
                 }
                 pageCount = map.images.size
+            }
+
+            val rowViewModel = viewModel.similarMapsViewModel
+            rowViewModel.viewModelScope.launch {
+                rowViewModel.maps.collectLatest { pagingData ->
+                    mapRowAdapter.submitData(pagingData)
+                }
             }
         }
     }

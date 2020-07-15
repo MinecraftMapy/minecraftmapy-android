@@ -40,6 +40,8 @@ class MapFragment : BaseFragment<MapFragmentBinding>(R.layout.map_fragment) {
             setToolbarTitle(map.info.title)
             commentListAdapter.originalPosterUsername = map.author.username
 
+
+
             if (map.stats.commentCount == 0)
                 return@observe
             lifecycleScope.launch {

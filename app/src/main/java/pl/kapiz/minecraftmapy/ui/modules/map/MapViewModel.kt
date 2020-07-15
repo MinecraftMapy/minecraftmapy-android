@@ -14,6 +14,7 @@ import pl.kapiz.minecraftmapy.data.paging.MapCommentPagingSource
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.data.repository.UserRepository
 import pl.kapiz.minecraftmapy.ui.base.BaseViewModel
+import pl.kapiz.minecraftmapy.ui.modules.maps.MapRowViewModel
 
 class MapViewModel @ViewModelInject constructor(
     private val mapRepository: MapRepository,
@@ -33,6 +34,11 @@ class MapViewModel @ViewModelInject constructor(
     ) {
         MapCommentPagingSource(mapRepository, map.value?.code)
     }.flow.cachedIn(viewModelScope)
+
+    val similarMapsViewModel by lazy { MapRowViewModel(
+        mapRepository,
+        map.value?.info?.category?.let { MapQuery.withCategory(it) } ?: MapQuery.default()
+    ) }
 
     suspend fun loadMap(mapCode: String) {
         if (this.mapCode == mapCode)
@@ -78,6 +84,13 @@ class MapViewModel @ViewModelInject constructor(
         navigate(MapFragmentDirections.actionToUserFragment(
             user = null,
             username = comment.author.username
+        ))
+    }
+
+    fun onMapClicked(map: Map) {
+        navigate(MapFragmentDirections.actionToMapFragment(
+            map = map,
+            mapCode = null
         ))
     }
 
