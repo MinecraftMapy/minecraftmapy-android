@@ -6,7 +6,6 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -27,7 +26,6 @@ class UserFragment : BaseFragment<UserFragmentBinding>(R.layout.user_fragment) {
         val mapListAdapter = MapListAdapter(viewModel::onMapClicked)
 
         b.list.apply {
-            layoutManager = LinearLayoutManager(context)
             adapter = ConcatAdapter(
                 userAdapter,
                 mapListAdapter.withLoadStateFooter(LoadStateAdapter())
@@ -39,6 +37,8 @@ class UserFragment : BaseFragment<UserFragmentBinding>(R.layout.user_fragment) {
             // update action bar title
             setToolbarTitle(user.info.username)
 
+            if (user.stats.mapCount == 0)
+                return@observe
             lifecycleScope.launch {
                 viewModel.maps.collectLatest { pagingData ->
                     mapListAdapter.submitData(pagingData)

@@ -6,7 +6,6 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,7 +28,6 @@ class MapFragment : BaseFragment<MapFragmentBinding>(R.layout.map_fragment) {
         }
 
         b.list.apply {
-            layoutManager = LinearLayoutManager(context)
             adapter = ConcatAdapter(
                 mapAdapter,
                 commentListAdapter.withLoadStateFooter(LoadStateAdapter())
@@ -42,6 +40,8 @@ class MapFragment : BaseFragment<MapFragmentBinding>(R.layout.map_fragment) {
             setToolbarTitle(map.info.title)
             commentListAdapter.originalPosterUsername = map.author.username
 
+            if (map.stats.commentCount == 0)
+                return@observe
             lifecycleScope.launch {
                 viewModel.comments.collectLatest { pagingData ->
                     commentListAdapter.submitData(pagingData)
