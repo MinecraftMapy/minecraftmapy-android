@@ -6,6 +6,7 @@ package pl.kapiz.minecraftmapy.ui.modules.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -15,6 +16,7 @@ import pl.kapiz.minecraftmapy.data.model.MapQuery
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import pl.kapiz.minecraftmapy.databinding.HomeRowBinding
 import pl.kapiz.minecraftmapy.ui.modules.home.row.HomeRowAdapter
+import pl.kapiz.minecraftmapy.ui.modules.home.row.HomeRowLoadStateAdapter
 import pl.kapiz.minecraftmapy.utils.BindingViewHolder
 
 class HomeAdapter(
@@ -41,7 +43,13 @@ class HomeAdapter(
             b.mapQuery = item
 
             val adapter = HomeRowAdapter(mapRepository, item, onMapClicked)
-            b.row.adapter = adapter
+            b.row.adapter = adapter.run {
+                val header = HomeRowLoadStateAdapter(4)
+                addLoadStateListener { loadStates ->
+                    header.loadState = loadStates.refresh
+                }
+                return@run ConcatAdapter(header, this)
+            }
             lifecycleScope.launch {
                 adapter.maps.collectLatest { pagingData ->
                     adapter.submitData(pagingData)

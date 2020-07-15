@@ -41,7 +41,10 @@ class HomeRowAdapter(
         val b = holder.binding
         getItem(position)?.let { item ->
             b.map = item
+            b.isPlaceholder = false
             b.root.setOnClickListener { onMapClicked(item) }
-        }
+        } ?: {
+            b.isPlaceholder = true
+        }()
     }
 }
