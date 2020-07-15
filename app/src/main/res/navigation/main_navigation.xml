@@ -61,7 +61,8 @@
         <argument
             android:name="map"
             app:argType="pl.kapiz.minecraftmapy.data.model.Map"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue="@null" />
         <argument
             android:name="mapCode"
             app:argType="string"
@@ -72,6 +73,10 @@
         <action
             android:id="@+id/action_to_mapListFragment"
             app:destination="@id/mapListFragment" />
+        <deepLink
+            android:id="@+id/mapFragmentDeepLink"
+            android:autoVerify="true"
+            app:uri="minecraftmapy.pl/mapa/{mapCode}" />
     </fragment>
 
     <fragment
@@ -81,6 +86,7 @@
         tools:layout="@layout/user_item">
         <argument
             android:name="user"
+            android:defaultValue="@null"
             app:argType="pl.kapiz.minecraftmapy.data.model.User"
             app:nullable="true" />
         <argument
@@ -90,5 +96,9 @@
         <action
             android:id="@+id/action_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <deepLink
+            android:id="@+id/userFragmentDeepLink"
+            android:autoVerify="true"
+            app:uri="minecraftmapy.pl/profil/{username}" />
     </fragment>
 </navigation>
