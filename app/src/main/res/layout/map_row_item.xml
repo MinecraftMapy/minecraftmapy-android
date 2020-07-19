@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) Kuba Szczodrzyński 2020-7-14.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="map"
+            type="pl.kapiz.minecraftmapy.data.model.Map" />
+        <variable
+            name="isPlaceholder"
+            type="Boolean" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        tools:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isInvisible="@{isPlaceholder}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="112dp"
+                android:imageUrlRoundedTop="@{map.images[0]}"
+                android:scaleType="centerCrop"
+                tools:ignore="contentDescription"
+                tools:src="@tools:sample/backgrounds/scenic[1]" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{map.info.title}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                tools:text="Gówno Strusia" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{@string/map_author_icon_format(map.author.username)}"
+                    android:textSize="12sp"
+                    tools:text="() BialaSilaP" />
+
+                <com.mikepenz.iconics.view.IconicsTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/map_date_icon_format(map.info.createdAt)}"
+                    android:textSize="12sp"
+                    android:maxLength="12"
+                    tools:text="() 1 rok temu" />
+            </LinearLayout>
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="@{@string/map_row_item_details_format(map.info.category.name, map.stats.downloadCount)}"
+                android:textSize="12sp"
+                tools:text="() Adventure • () 1,3K" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:isVisible="@{isPlaceholder}" />
+    </com.google.android.material.card.MaterialCardView>
+</layout>

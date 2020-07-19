@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) Kacper Ziubryniewicz, Kuba Szczodrzyński 2020-7-1.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="pl.kapiz.minecraftmapy.ui.modules.map.MapViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:onClick="@{() -> viewModel.onAuthorClicked(viewModel.user)}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:imageUrlCircled="@{viewModel.user.info.avatarUrl}"
+                android:isInvisible="@{!viewModel.userFetched}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:isInvisible="@{!viewModel.userFetched}"
+                android:text="@{viewModel.user.info.username}"
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/userFollow"
+                app:layout_constraintStart_toEndOf="@+id/userImage"
+                app:layout_constraintTop_toTopOf="@+id/userImage"
+                tools:text="Użytkownik" />
+
+            <TextView
+                android:id="@+id/userFollowers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="2dp"
+                android:isInvisible="@{!viewModel.userFetched}"
+                android:text="@{@string/user_followers_format(viewModel.user.stats.followerCount)}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                app:layout_constraintBottom_toBottomOf="@+id/userImage"
+                app:layout_constraintEnd_toStartOf="@+id/userFollow"
+                app:layout_constraintStart_toEndOf="@+id/userImage"
+                app:layout_constraintTop_toBottomOf="@+id/userName"
+                tools:text="345 obserwujących" />
+
+            <Button
+                android:id="@+id/userFollow"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:isInvisible="@{!viewModel.userFetched}"
+                android:text="@string/follow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:indeterminate="true"
+                android:isVisible="@{!viewModel.userFetched}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="#7f7f7f7f"
+            android:isVisible="@{viewModel.mapFetched}" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:isVisible="@{viewModel.mapFetched}"
+            app:flexDirection="row"
+            app:flexWrap="wrap"
+            app:justifyContent="center">
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/categoryName"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:drawablePadding="4dp"
+                android:gravity="center_horizontal"
+                android:maxWidth="96dp"
+                android:maxLines="2"
+                android:onClick="@{() -> viewModel.onCategoryClicked(viewModel.map)}"
+                android:text="@{viewModel.map.info.category.name}"
+                app:iiv_top_color="?android:textColorSecondary"
+                app:iiv_top_icon="cmd_shape_outline"
+                app:iiv_top_size="28dp"
+                tools:drawableTopCompat="@android:drawable/ic_delete"
+                tools:text="Kategoria całkiem długa" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/versionName"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:drawablePadding="4dp"
+                android:gravity="center_horizontal"
+                android:maxWidth="96dp"
+                android:onClick="@{() -> viewModel.onVersionClicked(viewModel.map)}"
+                android:text="@{viewModel.map.info.version.name}"
+                app:iiv_top_color="?android:textColorSecondary"
+                app:iiv_top_icon="cmd_tag_outline"
+                app:iiv_top_size="28dp"
+                tools:drawableTopCompat="@android:drawable/ic_input_get"
+                tools:text="1.16.1" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/downloadCount"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:drawablePadding="4dp"
+                android:gravity="center_horizontal"
+                android:maxWidth="96dp"
+                android:text="@{String.valueOf(viewModel.map.stats.downloadCount)}"
+                app:iiv_top_color="?android:textColorSecondary"
+                app:iiv_top_icon="cmd_download_outline"
+                app:iiv_top_size="28dp"
+                tools:drawableTopCompat="@android:drawable/ic_menu_save"
+                tools:text="150,3K" />
+
+            <com.mikepenz.iconics.view.IconicsTextView
+                android:id="@+id/starCount"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:drawablePadding="4dp"
+                android:gravity="center_horizontal"
+                android:maxWidth="96dp"
+                android:text="@{String.valueOf(viewModel.map.stats.diamondCount)}"
+                app:iiv_top_color="?android:textColorSecondary"
+                app:iiv_top_icon="cmd_star_outline"
+                app:iiv_top_size="28dp"
+                tools:drawableTopCompat="@android:drawable/star_big_on"
+                tools:text="1245" />
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <com.mikepenz.iconics.view.IconicsTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="4dp"
+            android:isVisible="@{viewModel.mapFetched}"
+            android:maxLength="12"
+            android:text="@{@string/map_date_icon_format(viewModel.map.info.createdAt)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            tools:text="Dodano 3 miesiące temu" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="4dp"
+            android:background="#7f7f7f7f"
+            android:isVisible="@{viewModel.mapFetched}" />
+
+        <TextView
+            android:id="@+id/map_description"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:autoLink="web|email"
+            android:text="@{viewModel.map.info.description}"
+            tools:text="Jesteś kosmitą wysłanym na Ziemię. Twoim zadaniem było badanie zwierząt. Jednak podczas lądowania coś poszło nie tak...\n\nEarth collision to mapa przygodowa, w której musisz wydostać się z Ziemi i wrócić na swoją planetę.\nWykonuj poszczególne etapy, aby zdobyć części do budowy nowej rakiety.\nMapa przeznaczona jest dla od 1 do 6 graczy.\n\nUWAGA! Nie polecam pobierać tej mapy. Na dzisiejsze standardy jest ona strasznie słaba i gra w nią to tylko strata czasu. Zamiast tego, bardziej proponuję zagranie w tę mapę: https://minecraftmapy.pl/mapa/skZOwH, chociaż ona również zdążyła się już zestarzeć. " />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:isVisible="@{viewModel.mapFetched}">
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/map_carousel"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/black"
+                app:fillColor="?colorAccent"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:pageColor="#44000000"
+                app:radius="6dp"
+                app:slideInterval="3000"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isVisible="@{viewModel.mapFetched}"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{@string/map_category_similar_format(viewModel.map.info.category.name)}"
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                tools:text="Zobacz inne mapy Adventure" />
+
+            <Button
+                android:id="@+id/similarMoreButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:text="@string/more" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/similarMaps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isVisible="@{viewModel.mapFetched}"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="20"
+            tools:listitem="@layout/map_row_item" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:isVisible="@{viewModel.mapFetched}"
+            android:text="@{@string/map_comments_format(viewModel.map.stats.commentCount)}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            tools:text="Komentarze (128)" />
+    </LinearLayout>
+</layout>

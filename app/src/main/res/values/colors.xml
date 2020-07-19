@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="amber_400">#ffca28</color>
-    <color name="amber_400_dark">#c79a00</color>
-    <color name="amber_700">#ffa000</color>
-    <color name="amber_700_dark">#c67100</color>
-    <color name="amber_900">#ff6f00</color>
-    <color name="blue_grey_400">#78909c</color>
-    <color name="blue_grey_800">#37474f</color>
-    <color name="blue_grey_900">#263238</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colors for the app -->
+    <color name="primary_light">@color/amber_400</color>
+    <color name="primary">@color/amber_700</color>
+    <color name="primary_dark">@color/amber_900</color>
+
+    <color name="accent_light">@color/indigo_A100</color>
+    <color name="accent">@color/indigo_A400</color>
+    <color name="accent_dark">@color/indigo_600</color>
 </resources>

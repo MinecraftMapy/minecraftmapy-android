@@ -1,16 +1,16 @@
 package pl.kapiz.minecraftmapy.data.paging
 
 import androidx.paging.PagingSource
-import pl.kapiz.minecraftmapy.data.pojo.Map
+import pl.kapiz.minecraftmapy.data.model.Map
+import pl.kapiz.minecraftmapy.data.model.MapQuery
 import pl.kapiz.minecraftmapy.data.repository.MapRepository
 import retrofit2.HttpException
 import java.io.IOException
 
 class MapPagingSource(
     private val mapRepository: MapRepository,
-    private val query: String? = null,
-    private val sortBy: Int? = null,
-    private val seed: Int? = null,
+    private val mapQuery: MapQuery? = null,
+    private val recommended: Boolean = false,
     private val username: String? = null
 ) : PagingSource<Int, Map>() {
 
@@ -18,17 +18,17 @@ class MapPagingSource(
         return try {
             val page = params.key ?: 1
 
-            val response = if (username == null) mapRepository.getMaps(
+            val response = mapRepository.getMaps(
                 page = page,
-                query = query,
-                sortBy = sortBy,
-                seed = seed
-            ) else mapRepository.getUserMaps(username, page)
+                mapQuery = mapQuery,
+                recommended = recommended,
+                username = username
+            )
 
             LoadResult.Page(
                 data = response.data,
                 prevKey = null,
-                nextKey = response.nextKey
+                nextKey = response.paging?.nextKey
             )
         } catch (e: IOException) {
             LoadResult.Error(e)
